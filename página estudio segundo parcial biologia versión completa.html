@@ -1,0 +1,1549 @@
+<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Biología General · Plataforma Avanzada</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f5faf6;--surface:#fff;--soft:#eef7f0;--soft2:#f8fbf8;--text:#183526;--muted:#667c70;--border:rgba(24,53,38,.12);--shadow:0 16px 42px rgba(18,46,32,.08);--green:#2f8b4d;--red:#c45252;--yellow:#c89a12;--blue:#2b6ea3;--greenSoft:rgba(47,139,77,.14);--redSoft:rgba(196,82,82,.14);--yellowSoft:rgba(200,154,18,.16);--blueSoft:rgba(43,110,163,.14);--radius:24px;--fs:16px}
+.theme-dark{--bg:#0d1f13;--surface:#162218;--soft:#1c2e1e;--soft2:#18281a;--text:#d0edd8;--muted:#6fa07a;--border:rgba(80,180,100,.15);--shadow:0 16px 42px rgba(0,0,0,.5)}
+.theme-ocean{--bg:#e8f4fd;--surface:#fff;--soft:#cfe8fa;--soft2:#f0f8fe;--text:#0a2540;--muted:#4a7a9b;--border:rgba(10,37,64,.12);--green:#1a6fa0;--greenSoft:rgba(26,111,160,.15)}
+*{box-sizing:border-box;margin:0}html{scroll-behavior:smooth;font-size:var(--fs)}
+body{font-family:Inter,sans-serif;background:var(--bg);color:var(--text);line-height:1.55;transition:background .3s,color .3s}
+a{text-decoration:none;color:inherit}button,input,select,textarea{font:inherit;color:var(--text)}button{cursor:pointer}
+.container{width:min(1420px,100% - 1rem);margin:auto}
+/* TOPBAR */
+.topbar{position:sticky;top:0;z-index:50;background:rgba(245,250,246,.93);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);transition:background .3s}
+.theme-dark .topbar{background:rgba(13,31,19,.93)}.theme-ocean .topbar{background:rgba(232,244,253,.93)}
+.topbar-inner{display:flex;justify-content:space-between;align-items:center;gap:.5rem;padding:.7rem 0;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:.7rem}.logo{width:48px;height:48px;border-radius:16px;display:grid;place-items:center;background:linear-gradient(145deg,var(--green),#b4e8c4);box-shadow:var(--shadow);font-size:1.3rem;flex-shrink:0}
+.brand strong{display:block;font-size:.95rem}.brand small{color:var(--muted);font-size:.75rem}
+.menu{display:flex;flex-wrap:wrap;gap:.35rem;align-items:center}
+.chip,.btn{display:inline-flex;align-items:center;gap:.4rem;padding:.55rem .9rem;border-radius:999px;border:1px solid var(--border);background:var(--surface);font-weight:700;font-size:.82rem;transition:all .2s;white-space:nowrap}
+.chip:hover{background:var(--soft)}.btn.primary{background:var(--green);color:#fff;border-color:transparent}.btn.primary:hover{filter:brightness(1.1)}
+.btn.danger{background:var(--red);color:#fff;border-color:transparent}.btn.warn{background:var(--yellow);color:#fff;border-color:transparent}
+.mode-sw{display:flex;background:var(--soft);border-radius:999px;padding:3px;gap:2px;border:1px solid var(--border)}
+.mode-sw button{padding:.35rem .75rem;border-radius:999px;border:none;background:transparent;font-size:.78rem;font-weight:700;color:var(--muted);transition:all .2s}
+.mode-sw button.active{background:var(--surface);color:var(--green);box-shadow:0 2px 8px rgba(0,0,0,.08)}
+/* LAYOUT */
+.hero{padding:1rem 0}.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:1rem}
+.card,.panel,details{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+.hero-main{padding:1.35rem}
+.eyebrow{display:inline-flex;padding:.38rem .72rem;border-radius:999px;background:var(--greenSoft);color:var(--green);font-weight:800;font-size:.78rem}
+.hero-main h1{font-family:Merriweather,serif;font-size:clamp(1.6rem,.8rem+2vw,3rem);line-height:1.1;margin:.6rem 0 0}
+.muted{color:var(--muted)}.mini{padding:.9rem;border-radius:18px;background:var(--soft);border:1px solid var(--border)}
+.mini strong{display:block;font-size:.82rem}.mini .val{font-size:1.5rem;font-weight:800;color:var(--green)}
+.xp-wrap{height:8px;border-radius:999px;background:var(--soft);overflow:hidden;margin:.5rem 0;border:1px solid var(--border)}
+.xp-fill{height:100%;background:linear-gradient(90deg,var(--green),#6ddf9a);border-radius:999px;transition:width .8s}
+.hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:.7rem;margin-top:.8rem}
+.layout{display:grid;grid-template-columns:300px 1fr;gap:1rem;padding-bottom:2rem}
+.sidebar{position:sticky;top:86px;align-self:start;display:grid;gap:.8rem;max-height:calc(100vh - 96px);overflow-y:auto}
+.panel{padding:1rem}.navbox a{display:block;padding:.6rem .8rem;border-radius:12px;font-weight:700;color:var(--muted);font-size:.85rem;transition:all .2s}
+.navbox a:hover,.navbox a.active{background:var(--soft);color:var(--text)}
+.section{padding:.3rem 0 1rem}.section-head{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;margin-bottom:.8rem;flex-wrap:wrap}
+.section-head h2{font-family:Merriweather,serif;font-size:clamp(1.3rem,.8rem+1.2vw,1.9rem);margin:0}
+.module-desc{font-size:.82rem;color:var(--muted);margin-top:.2rem;font-style:italic}
+.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:.85rem}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:.85rem}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:.7rem}
+/* TOPIC */
+.topic-card{position:relative;overflow:hidden;padding:1rem}
+.topic-card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:7px;background:var(--green)}
+.topic-red::before{background:var(--red)}.topic-blue::before{background:var(--blue)}.topic-green::before{background:var(--green)}
+.summary-line{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;flex-wrap:wrap}
+.summary-left{display:flex;align-items:flex-start;gap:.7rem}
+.num{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:var(--soft);font-weight:800;flex-shrink:0}
+.summary-right{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center}
+.body{padding-top:.8rem;display:grid;gap:.8rem}
+.subitem,.sim-question,.game-card,.result-box,.fullbox{padding:1rem;border-radius:18px;background:var(--soft);border:1px solid var(--border)}
+.badge{padding:.3rem .6rem;border-radius:999px;font-size:.75rem;font-weight:800;border:1px solid var(--border)}
+.badge-red{background:var(--redSoft);color:var(--red)}.badge-blue{background:var(--blueSoft);color:var(--blue)}
+.badge-green{background:var(--greenSoft);color:var(--green)}.badge-yellow{background:var(--yellowSoft);color:var(--yellow)}
+.list{display:grid;gap:.3rem;margin:.6rem 0 0;padding-left:1rem}
+.toolbar{display:flex;gap:.45rem;flex-wrap:wrap;align-items:center}
+.warn{padding:.8rem 1rem;border-radius:16px;background:var(--yellowSoft);color:rgb(133,98,0);border:1px solid var(--border);font-size:.88rem}
+.mark-red{background:linear-gradient(transparent 56%,rgba(196,82,82,.2) 56%)}
+.mark-yellow{background:linear-gradient(transparent 56%,rgba(200,154,18,.22) 56%)}
+.mark-green{background:linear-gradient(transparent 56%,rgba(47,139,77,.2) 56%)}
+.option{display:flex;align-items:flex-start;gap:.6rem;padding:.7rem .8rem;border-radius:14px;border:1px solid var(--border);background:var(--surface);cursor:pointer;transition:all .2s;font-size:.88rem}
+.option:hover{background:var(--soft)}.option.correct{background:var(--greenSoft);border-color:var(--green)}.option.wrong{background:var(--redSoft);border-color:var(--red)}
+.mcq{display:grid;gap:.5rem;margin-top:.6rem}
+.feedback{display:none;margin-top:.6rem;padding:.75rem .9rem;border-radius:14px;font-size:.85rem;line-height:1.6}
+.feedback.show{display:block}.good{background:var(--greenSoft);color:#166534}.bad{background:var(--redSoft);color:#991b1b}
+textarea,input[type=text],input[type=number],input[type=password],select{width:100%;padding:.7rem .9rem;border-radius:14px;border:1px solid var(--border);background:var(--soft2);color:var(--text)}
+textarea:focus,input:focus,select:focus{outline:2px solid var(--green);outline-offset:1px}
+.toggle-panel{display:none;margin-top:1rem}.toggle-panel.show{display:grid;gap:1rem}
+.fav-btn.active{background:var(--yellowSoft);color:rgb(143,106,0)}
+.results-row{display:grid;grid-template-columns:1.25fr auto auto;gap:.8rem;align-items:center;padding:.8rem 0;border-bottom:1px solid var(--border)}
+.results-row:last-child{border-bottom:none}
+.foot{padding:1rem 0 2rem;color:var(--muted);font-size:.82rem}
+.subtopic-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:.8rem}
+.subtopic-item{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;padding:10px;border:1px solid var(--border);border-radius:12px;background:var(--surface)}
+.subtopic-item p{margin:.3rem 0 0;font-size:.85rem;color:var(--muted)}.subtopic-item select{min-width:120px;font-size:.8rem}
+.level-1{margin-left:8px}.level-2{margin-left:20px}.level-3{margin-left:34px}
+.exam-form .question-block{padding:12px;border:1px solid var(--border);border-radius:12px;margin:0 0 10px;background:var(--surface)}
+.exam-form label{display:block;margin:.3rem 0}
+/* NEW FUNCTIONAL */
+.prog-bar{height:10px;border-radius:999px;background:var(--soft);overflow:hidden;border:1px solid var(--border)}
+.prog-fill{height:100%;border-radius:999px;background:var(--green);transition:width .6s}
+.prog-fill.red{background:var(--red)}.prog-fill.yellow{background:var(--yellow)}.prog-fill.blue{background:var(--blue)}
+.dom-chip{display:inline-flex;padding:.4rem .75rem;border-radius:10px;font-size:.72rem;font-weight:700;cursor:pointer;margin:.2rem;transition:all .2s}
+.dom-0{background:#fce4e4;color:#991b1b;border:1px solid #fca5a5}
+.dom-1{background:#fef9c3;color:#854d0e;border:1px solid #fde68a}
+.dom-2{background:#dcfce7;color:#166534;border:1px solid #86efac}
+.dom-3{background:#dbeafe;color:#1e40af;border:1px solid #93c5fd}
+.dom-chip:hover{filter:brightness(.9);transform:scale(1.04)}
+.ach-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:.7rem}
+.ach-item{padding:.8rem;border-radius:16px;background:var(--soft);border:1px solid var(--border);text-align:center}
+.ach-item.locked{opacity:.35;filter:grayscale(1)}.ach-icon{font-size:1.8rem}.ach-name{font-size:.8rem;font-weight:700;margin-top:.3rem}
+.flash-card-wrap{min-height:200px;display:grid;place-items:center;cursor:pointer;text-align:center;padding:1.5rem;font-size:1rem;font-weight:600}
+.flash-back{display:none;color:var(--green)}.flipped .flash-front{display:none}.flipped .flash-back{display:block}
+.pomo-display{font-size:3.2rem;font-weight:800;text-align:center;padding:1.5rem;background:var(--soft);border-radius:20px;font-variant-numeric:tabular-nums}
+.timer-d{font-size:1.2rem;font-weight:800;font-variant-numeric:tabular-nums;color:var(--red)}
+.toast{position:fixed;bottom:1.5rem;right:1.5rem;background:var(--green);color:#fff;padding:.85rem 1.3rem;border-radius:18px;font-weight:700;z-index:9999;transform:translateY(120px);opacity:0;transition:all .4s;pointer-events:none;max-width:340px;box-shadow:var(--shadow);font-size:.88rem}
+.toast.show{transform:translateY(0);opacity:1}
+.stat-card{padding:.9rem;border-radius:16px;background:var(--soft);border:1px solid var(--border);text-align:center}
+.stat-card .sv{font-size:1.6rem;font-weight:800;color:var(--green)}.stat-card .sl{font-size:.75rem;color:var(--muted)}
+.search-hl{background:rgba(200,154,18,.38);border-radius:3px;font-weight:700}
+.admin-panel{border:2px solid var(--red);border-radius:var(--radius);padding:1.2rem;background:var(--surface)}
+.admin-panel h3{color:var(--red);margin:0 0 .8rem}
+.reco-item{padding:.7rem;border-radius:12px;background:var(--soft);border:1px solid var(--border);margin-bottom:.5rem;font-size:.85rem}
+.reco-item strong{display:block}.reco-item .reco-action{color:var(--green);font-size:.8rem;cursor:pointer;font-weight:700}
+.rank-row{display:flex;justify-content:space-between;align-items:center;padding:.6rem 0;border-bottom:1px solid var(--border);font-size:.88rem}
+.rank-row:last-child{border-bottom:none}.rank-medal{font-size:1.1rem;width:28px}
+.history-row{display:flex;justify-content:space-between;padding:.4rem 0;border-bottom:1px solid var(--border);font-size:.82rem}
+.history-row:last-child{border-bottom:none}
+.tab-bar{display:flex;gap:.4rem;margin-bottom:.8rem;flex-wrap:wrap}
+.tab-btn{padding:.5rem 1rem;border-radius:999px;border:1px solid var(--border);background:var(--soft);font-weight:700;font-size:.82rem;cursor:pointer;transition:all .2s}
+.tab-btn.active{background:var(--green);color:#fff;border-color:transparent}
+.tab-pane{display:none}.tab-pane.active{display:block}
+@media(max-width:1180px){.layout,.hero-grid,.hero-stats,.grid2,.grid3,.grid4,.subtopic-grid{grid-template-columns:1fr}.sidebar{position:static;max-height:none}.results-row{grid-template-columns:1fr}}
+@media(max-width:640px){.topbar-inner{flex-direction:column;align-items:flex-start}.menu{gap:.25rem}}
+</style>
+</head>
+<body>
+<div class="toast" id="toastEl"></div>
+
+<!-- ═══ TOPBAR ═══ -->
+<header class="topbar">
+<div class="container topbar-inner">
+  <div class="brand">
+    <div class="logo">🧬</div>
+    <div><small>Plataforma de estudio</small><strong>Biología General</strong></div>
+  </div>
+  <nav class="menu">
+    <a class="chip" href="#dashboard">📊 Dashboard</a>
+    <a class="chip" href="#resumen">Resumen</a>
+    <a class="chip" href="#examenes">Examen 2023</a>
+    <a class="chip" href="#simulacros">Simulacros</a>
+    <a class="chip" href="#juego">Juego</a>
+    <a class="chip" href="#flashcards">Flashcards</a>
+    <a class="chip" href="#pomodoro">🍅</a>
+    <a class="chip" href="#logros">🏆</a>
+    <a class="chip" href="#panel">Progreso</a>
+    <div class="mode-sw">
+      <button id="btnEstudio" class="active" onclick="A.setMode('estudio')" title="Feedback inmediato, pistas y repaso guiado">📖 Estudio</button>
+      <button id="btnExamen" onclick="A.setMode('examen')" title="Oculta respuestas hasta terminar, usa temporizador">📝 Examen</button>
+    </div>
+    <button class="btn" onclick="A.toggleTheme()" title="Cambiar tema visual">🎨</button>
+    <button class="btn" onclick="A.exportData()" title="Guarda tu progreso en un archivo JSON para restaurarlo después">⬇️ Guardar</button>
+    <button class="btn" onclick="document.getElementById('importFile').click()" title="Restaura tu progreso desde un archivo guardado">⬆️ Restaurar</button>
+    <input type="file" id="importFile" accept=".json" style="display:none" onchange="A.importData(this)">
+    <button class="btn" onclick="A.openAdmin()" title="Panel de administración">⚙️</button>
+    <!-- SEARCH -->
+    <div style="position:relative">
+      <input type="text" id="searchInput" placeholder="🔍 Buscar…" style="width:160px;padding:.45rem .8rem;font-size:.8rem" oninput="A.search(this.value)" autocomplete="off">
+      <div id="searchDrop" style="position:absolute;top:110%;right:0;width:340px;background:var(--surface);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow);z-index:200;display:none;max-height:400px;overflow-y:auto;padding:.5rem"></div>
+    </div>
+  </nav>
+</div>
+</header>
+
+<!-- ═══ HERO ═══ -->
+<main class="container hero">
+<div class="hero-grid">
+  <section class="card hero-main">
+    <span class="eyebrow" id="levelBadge">Nivel 1 · Aprendiz 🌱</span>
+    <h1>Plataforma completa de estudio con progreso real.</h1>
+    <p class="muted" style="margin-top:.5rem">Examen 2023 íntegro, estadísticas adaptativas, gamificación, flashcards, Pomodoro y modo examen/estudio. Todo persistente.</p>
+    <div class="xp-wrap"><div class="xp-fill" id="xpFill" style="width:0%"></div></div>
+    <p class="muted" style="font-size:.78rem" id="xpLbl">0/100 XP · <strong id="modeLbl">Modo: Estudio</strong></p>
+    <div class="hero-stats">
+      <div class="mini"><strong>Preguntas</strong><div class="val" id="hTotal">0</div></div>
+      <div class="mini"><strong>Aciertos</strong><div class="val" id="hHits" style="color:var(--green)">0</div></div>
+      <div class="mini"><strong>Errores</strong><div class="val" id="hMiss" style="color:var(--red)">0</div></div>
+      <div class="mini"><strong>Racha 🔥</strong><div class="val" id="hStreak">0</div></div>
+    </div>
+    <div style="margin-top:.8rem;font-size:.82rem;color:var(--muted)" id="lastSession">Sin sesiones previas.</div>
+  </section>
+  <aside class="panel">
+    <h3 style="margin-top:0;font-size:1rem">🤖 Recomendaciones automáticas</h3>
+    <p class="muted" style="font-size:.78rem">Generadas según tu rendimiento real por tema.</p>
+    <div id="recoPanel" style="font-size:.85rem;line-height:1.8;margin-top:.6rem">Cargando…</div>
+    <div style="margin-top:.8rem">
+      <button class="btn" style="font-size:.78rem;padding:.4rem .7rem;width:100%" onclick="document.getElementById('searchInput').focus()">🔍 Búsqueda global</button>
+    </div>
+  </aside>
+</div>
+</main>
+
+<!-- ═══ LAYOUT ═══ -->
+<div class="container layout">
+<aside class="sidebar">
+  <div class="panel navbox">
+    <strong style="font-size:.85rem">Navegación</strong>
+    <div style="margin-top:.5rem;display:grid;gap:.2rem">
+      <a href="#dashboard">📊 Dashboard</a>
+      <a href="#resumen">📚 Resumen</a>
+      <a href="#cobertura">🗺️ Cobertura</a>
+      <a href="#examenes">📝 Examen 2023</a>
+      <a href="#simulacros">⚡ Simulacros</a>
+      <a href="#desarrollo">✏️ Desarrollo libre</a>
+      <a href="#juego">🎮 Juego</a>
+      <a href="#flashcards">🃏 Flashcards</a>
+      <a href="#pomodoro">🍅 Pomodoro</a>
+      <a href="#logros">🏆 Logros</a>
+      <a href="#mapa">🗾 Mapa de dominio</a>
+      <a href="#panel">👤 Panel personal</a>
+    </div>
+  </div>
+  <!-- CRONÓMETRO -->
+  <div class="panel">
+    <strong style="font-size:.85rem">⏱ Cronómetro de estudio</strong>
+    <p class="muted" style="font-size:.75rem;margin:.2rem 0 .5rem">Registra tu tiempo acumulado por sesión.</p>
+    <div class="timer-d" id="globalTimer">00:00:00</div>
+    <div class="toolbar" style="margin-top:.5rem">
+      <button class="btn primary" style="font-size:.75rem;padding:.4rem .7rem" onclick="A.timerToggle()">▶/⏸</button>
+      <button class="btn" style="font-size:.75rem;padding:.4rem .7rem" onclick="A.timerReset()">↺</button>
+    </div>
+  </div>
+  <!-- TTS -->
+  <div class="panel">
+    <strong style="font-size:.85rem">🔊 Lectura en voz alta</strong>
+    <p class="muted" style="font-size:.75rem;margin:.2rem 0 .5rem">Lee cualquier texto en voz alta.</p>
+    <textarea id="ttsText" rows="3" style="font-size:.8rem" placeholder="Pega texto aquí…"></textarea>
+    <div class="toolbar" style="margin-top:.4rem">
+      <button class="btn primary" style="font-size:.75rem;padding:.38rem .7rem" onclick="A.tts(document.getElementById('ttsText').value)">▶</button>
+      <button class="btn" style="font-size:.75rem;padding:.38rem .7rem" onclick="speechSynthesis.pause()">⏸</button>
+      <button class="btn" style="font-size:.75rem;padding:.38rem .7rem" onclick="speechSynthesis.cancel()">⏹</button>
+    </div>
+  </div>
+  <!-- FAVORITOS -->
+  <div class="panel">
+    <strong style="font-size:.85rem">⭐ Favoritos</strong>
+    <div id="favList" style="margin-top:.5rem;font-size:.82rem;color:var(--muted)">Sin favoritos.</div>
+  </div>
+  <!-- CONTINUAR -->
+  <div class="panel" id="continuePanel" style="display:none">
+    <strong style="font-size:.85rem">▶ Continuar donde quedé</strong>
+    <div id="continueInfo" style="font-size:.82rem;margin-top:.4rem;color:var(--muted)"></div>
+    <button class="btn primary" style="font-size:.78rem;margin-top:.5rem;width:100%" onclick="A.resumeSession()">Continuar</button>
+  </div>
+</aside>
+
+<div>
+<!-- ═══════════ DASHBOARD ═══════════ -->
+<section class="section" id="dashboard">
+  <div class="section-head">
+    <div><h2>📊 Dashboard</h2><p class="module-desc">Vista general de tu progreso real: qué estudiar hoy, racha, tiempo acumulado y acceso rápido. Se actualiza automáticamente.</p></div>
+    <div class="toolbar">
+      <button class="btn danger" style="font-size:.78rem" onclick="if(confirm('¿Borrar TODO el progreso?'))A.resetAll()">🗑 Reset total</button>
+    </div>
+  </div>
+  <div class="grid4" style="margin-bottom:1rem">
+    <div class="stat-card"><div class="sv" id="ds_pct">0%</div><div class="sl">Precisión global</div></div>
+    <div class="stat-card"><div class="sv" id="ds_sims">0</div><div class="sl">Simulacros hechos</div></div>
+    <div class="stat-card"><div class="sv" id="ds_xp">0</div><div class="sl">XP total</div></div>
+    <div class="stat-card"><div class="sv" id="ds_time">0m</div><div class="sl">Tiempo estudiado</div></div>
+  </div>
+  <div class="grid2">
+    <div class="panel">
+      <strong>Progreso por tema (basado en respuestas)</strong>
+      <div id="themeBars" style="margin-top:.8rem;display:grid;gap:.7rem"></div>
+    </div>
+    <div class="panel">
+      <strong>Actividad reciente</strong>
+      <div id="activityFeed" style="margin-top:.6rem;font-size:.83rem;color:var(--muted)">Sin actividad registrada.</div>
+    </div>
+  </div>
+  <div class="grid2" style="margin-top:.8rem">
+    <div class="panel">
+      <strong>Historial examen 2023</strong>
+      <div id="examHistory" style="margin-top:.6rem;font-size:.83rem;color:var(--muted)">Sin intentos.</div>
+    </div>
+    <div class="panel">
+      <strong>Ranking local (sesiones)</strong>
+      <p class="muted" style="font-size:.75rem">Basado en XP acumulado.</p>
+      <div id="rankPanel" style="margin-top:.5rem"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ RESUMEN ═══════════ -->
+<section class="section" id="resumen">
+  <div class="section-head">
+    <div><h2>📚 Resumen teórico</h2><p class="module-desc">Contenido completo organizado por temas oficiales 4–5–6. Úsalo antes de practicar.</p></div>
+    <button class="btn" style="font-size:.78rem" onclick="A.tts(document.getElementById('resBody').innerText.substring(0,3000))">🔊 Leer T4</button>
+  </div>
+  <div style="display:grid;gap:.9rem" id="resBody">
+    <details class="topic-card topic-red" open data-search-section="resumen">
+      <summary class="summary-line" style="cursor:pointer">
+        <div class="summary-left"><span class="num">4</span><div><strong>Tema 4. Las bases genéticas de la vida</strong><div class="muted">Organización cromosómica, ciclo celular, meiosis, herencia, ADN, expresión génica y biotecnología.</div></div></div>
+        <div class="summary-right">
+          <select data-topic="t4" onchange="A.syncTopic('t4',this.value)"><option>No visto</option><option>Estudiado</option><option>Practicado</option><option>Dominado</option></select>
+          <button class="btn fav-btn" data-fav="Tema 4" onclick="A.toggleFav(this)">☆ Fav</button>
+          <span class="badge badge-red">T4</span>
+        </div>
+      </summary>
+      <div class="body">
+        <div class="warn">⭐ <strong>Clave:</strong> bloque más extenso y con mayor peso en exámenes. Dominar ciclo celular, meiosis, herencia mendeliana y expresión génica garantiza puntos.</div>
+        <div class="grid2">
+          <div class="subitem" data-keywords="organización adn cromosomas histonas cromatina cariotipo ploidia"><strong>4.1 Organización del ADN en cromosomas</strong><ul class="list"><li>ADN eucariota se asocia con histonas → cromatina; permite empaquetamiento.</li><li>Heterocromatina = compacta; eucromatina = activa (menor condensación).</li><li>Cariotipo: representación de cromosomas. Diploides: 2n; haploides: n. En humanos 2n=46.</li><li><span class="mark-red">Error:</span> cromátidas ≠ cromosomas homólogos.</li></ul></div>
+          <div class="subitem" data-keywords="ciclo celular g1 s g2 mitosis interfase"><strong>4.2 Ciclo celular eucariota</strong><ul class="list"><li>G1 (crecimiento) → S (duplicación ADN) → G2 (preparación) → Fase M.</li><li><span class="mark-yellow">Clave:</span> la interfase NO es reposo.</li><li>Control: ciclinas + CDK; puntos de control en G1→S, G2→M y metafase→anafase.</li><li>Apoptosis = muerte celular programada (p53 la induce si hay daño).</li></ul></div>
+          <div class="subitem" data-keywords="mitosis profase metafase anafase telofase citocinesis"><strong>4.2.4 Mitosis y citocinesis</strong><ul class="list"><li>Profase → Prometafase → Metafase → Anafase → Telofase → Citocinesis.</li><li>En anafase se separan cromátidas hermanas (no homólogos).</li><li>Animales: surco de segmentación. Vegetales: placa celular.</li></ul></div>
+          <div class="subitem" data-keywords="meiosis meiosis1 meiosis2 gametos variabilidad entrecruzamiento sinapsis"><strong>4.3 Meiosis y reproducción sexual</strong><ul class="list"><li>Una duplicación → dos divisiones (Meiosis I + Meiosis II) → 4 células haploides.</li><li>Meiosis I: separa homólogos. Meiosis II: separa cromátidas.</li><li>Profase I: sinapsis + entrecruzamiento → fuente de variabilidad genética.</li><li><span class="mark-red">Clave de examen:</span> en Meiosis I NO se separan cromátidas hermanas.</li></ul></div>
+          <div class="subitem" data-keywords="herencia mendel gen alelo locus genotipo fenotipo punnett segregacion independencia"><strong>4.4 Herencia mendeliana</strong><ul class="list"><li>Locus = posición del gen; alelo = versión del gen.</li><li>Segregación: gameto recibe un alelo de cada par.</li><li>Independencia: genes en distintos cromosomas se heredan independientemente.</li><li>Cuadros de Punnett para prever genotipos. Cruce de prueba: infiere genotipo dominante.</li><li>Dihíbrido independiente → proporción 9:3:3:1 en F2.</li></ul></div>
+          <div class="subitem" data-keywords="codominancia dominancia incompleta alelos multiples ABO poligenia pleiotropia epigenetica"><strong>4.4 Patrones no mendelianos</strong><ul class="list"><li>Dominancia incompleta: heterocigoto con fenotipo intermedio.</li><li>Codominancia: ambos alelos se expresan (ej. tipo AB).</li><li>ABO: 3 alelos IA, IB, i → 6 genotipos.</li><li>Herencia poligénica: varios genes → rasgo continuo (estatura, color piel).</li><li>Pleiotropía: un gen → múltiples efectos fenotípicos.</li></ul></div>
+          <div class="subitem" data-keywords="herencia ligada sexo hemofilia daltonismo turner klinefelter"><strong>4.4.10–11 Herencia ligada al sexo y trastornos</strong><ul class="list"><li>Genes en cromosoma X. Hombres (XY): cualquier alelo recesivo X se expresa.</li><li>Hemofilia y daltonismo: recesivos ligados a X, más frecuentes en hombres.</li><li>Klinefelter: XXY. Turner: X0. Down: trisomía 21. Origen: no disyunción.</li><li><span class="mark-red">Error:</span> mezclar mutación génica con no disyunción cromosómica.</li></ul></div>
+          <div class="subitem" data-keywords="adn estructura nucleotido doble helice replicacion semiconservativa helicasa polimerasa"><strong>4.5 ADN: estructura y replicación</strong><ul class="list"><li>Nucleótido = fosfato + desoxirribosa + base (A, T, G, C).</li><li>Puentes H: A=T (2) y G≡C (3). Chargaff, Watson, Crick, Franklin.</li><li>Replicación semiconservativa: hebra vieja + hebra nueva.</li><li>Helicasa abre; primasa pone cebador; ADN-pol III sintetiza; ligasa une fragmentos.</li></ul></div>
+          <div class="subitem" data-keywords="transcripcion traduccion ARN codon AUG expresion genica operón lac regulacion"><strong>4.6 Expresión y regulación génica</strong><ul class="list"><li>ADN → ARNm (transcripción, en núcleo) → proteína (traducción, ribosoma).</li><li>AUG = inicio; UAA/UAG/UGA = stop. Codón = triplete en ARNm.</li><li>Eucariotas: intrones eliminados, exones unidos; cola poli-A y caperuza 5'.</li><li>Operón lac = regulación en procariotas: promotor + operador + genes estructurales.</li></ul></div>
+          <div class="subitem" data-keywords="PCR ADN recombinante biotecnologia OGM terapia genica genomica bioética clonacion secuenciacion"><strong>4.7 Tecnología del ADN</strong><ul class="list"><li>PCR amplifica secuencias específicas desde cantidades mínimas.</li><li>ADN recombinante: cortar (endonucleasas) + insertar en vector → célula huésped.</li><li>OGM, terapia génica, secuenciación, genómica → aplicaciones médicas y agrícolas.</li><li>Bioética: riesgos, acceso y uso responsable de la tecnología genética.</li></ul></div>
+        </div>
+      </div>
+    </details>
+
+    <details class="topic-card topic-blue" data-search-section="resumen">
+      <summary class="summary-line" style="cursor:pointer">
+        <div class="summary-left"><span class="num">5</span><div><strong>Tema 5. Evolución de la vida</strong><div class="muted">Pensamiento evolutivo, genética de poblaciones, Hardy-Weinberg, selección, especiación.</div></div></div>
+        <div class="summary-right">
+          <select data-topic="t5" onchange="A.syncTopic('t5',this.value)"><option>No visto</option><option>Estudiado</option><option>Practicado</option><option>Dominado</option></select>
+          <button class="btn fav-btn" data-fav="Tema 5" onclick="A.toggleFav(this)">☆ Fav</button>
+          <span class="badge badge-blue">T5</span>
+        </div>
+      </summary>
+      <div class="body">
+        <div class="grid2">
+          <div class="subitem" data-keywords="darwin seleccion natural variacion heredable teoria sintetica evidencias fosiles anatomia biogeografia molecular"><strong>5.1 Principios y evidencias</strong><ul class="list"><li>Darwin: selección natural + variación heredable → adaptación y cambio evolutivo.</li><li>Teoría sintética une genética mendeliana + evolución de poblaciones.</li><li>Evidencias: fósiles, anatomía comparada (homólogos vs. análogos), embriología, biogeografía, biología molecular.</li><li>Órganos análogos: misma función, origen distinto (ej. ala de insecto y ala de ave).</li></ul></div>
+          <div class="subitem" data-keywords="hardy weinberg equilibrio frecuencia alélica genotipica p2 2pq q2 heterocigotos"><strong>5.2.2 Hardy-Weinberg</strong><ul class="list"><li>Equilibrio: frecuencias alélicas constantes si NO hay fuerzas evolutivas.</li><li>p² + 2pq + q² = 1. Heterocigotos = 2pq.</li><li>5 condiciones: sin mutación, sin selección, apareamiento al azar, sin migración, tamaño grande.</li><li><span class="mark-yellow">Clave:</span> si la población se desvía → evolución actuando.</li></ul></div>
+          <div class="subitem" data-keywords="seleccion natural estabilizadora direccional disruptiva sexual artificial deriva flujo genico mutacion"><strong>5.2.4–5 Causas y tipos de selección</strong><ul class="list"><li>Mutación = fuente original de nuevos alelos.</li><li>Deriva genética, flujo génico, efecto fundador, consanguinidad.</li><li>Selección estabilizadora: favorece promedio. Direccional: favorece un extremo. Disruptiva: favorece extremos.</li></ul></div>
+          <div class="subitem" data-keywords="especiacion alopatrica simpatrica parapatrica aislamiento reproductivo precigótico postcigótico macroevolucion"><strong>5.3 Especiación</strong><ul class="list"><li>Barrera precigótica: evita fecundación. Postcigótica: descendencia inviable/estéril.</li><li>Alopátrica: separación geográfica. Simpátrica: mismo espacio. Parapátrica: área parcial.</li><li>Macroevolución: patrones a escala de especie o superior.</li></ul></div>
+        </div>
+      </div>
+    </details>
+
+    <details class="topic-card topic-green" open data-search-section="resumen">
+      <summary class="summary-line" style="cursor:pointer">
+        <div class="summary-left"><span class="num">6</span><div><strong>Tema 6. Diversidad biológica</strong><div class="muted">Origen de la vida, dominios, protistas, hongos, plantas, animales.</div></div></div>
+        <div class="summary-right">
+          <select data-topic="t6" onchange="A.syncTopic('t6',this.value)"><option>No visto</option><option>Estudiado</option><option>Practicado</option><option>Dominado</option></select>
+          <button class="btn fav-btn" data-fav="Tema 6" onclick="A.toggleFav(this)">☆ Fav</button>
+          <span class="badge badge-green">T6</span>
+        </div>
+      </summary>
+      <div class="body">
+        <div class="grid2">
+          <div class="subitem" data-keywords="origen vida miller urey aminoacidos protocelulas cianobacterias endosimbiosis mitocondrias cloroplastos"><strong>6.1 Origen de la vida</strong><ul class="list"><li>Miller-Urey: síntesis abiótica de aminoácidos en condiciones primitivas (sin O₂).</li><li>Evolución química: compuestos simples → macromoléculas → protocélulas → primeras células.</li><li>Primeras células: procariotas heterótrofas anaerobias.</li><li>Cianobacterias → O₂ a la atmósfera (fotosíntesis oxigénica).</li><li>Endosimbiosis → mitocondrias y cloroplastos en eucariotas.</li></ul></div>
+          <div class="subitem" data-keywords="bacteria archaea eukarya dominio pared peptidoglicano ribosomas 70S 80S"><strong>6 Dominios y reinos</strong><ul class="list"><li>Bacteria: peptidoglicano en pared, ribosomas 70S, sin histonas.</li><li>Archaea: sin peptidoglicano clásico, lípidos con enlaces éter, con histonas.</li><li>Eukarya: orgánulos membranosos, ribosomas 80S.</li><li>Gram+: peptidoglicano grueso. Gram-: peptidoglicano delgado (pared más compleja).</li></ul></div>
+          <div class="subitem" data-keywords="liquen hongo alga micorriza raiz simbiosis dinoflagelados diatomeas quitridiomicetos briofitas pteridofitas gimnospermas angiospermas"><strong>6 Hongos, protistas y plantas</strong><ul class="list"><li>Liquen = hongo + alga/cianobacteria. Micorriza = raíz + hongo.</li><li>Dinoflagelados → marea roja. Diatomeas → tierra de diatomeas.</li><li>Quitridiomicetos: esporas flageladas.</li><li>Briofitas (musgos) → Pteridofitas (helechos) → Gimnospermas (coníferas) → Angiospermas.</li></ul></div>
+          <div class="subitem" data-keywords="animales porifera cnidaria platyhelminthes anelida artropoda mollusca nematodo echinodermata chordata vertebrados"><strong>6 Animales (phyla clave)</strong><ul class="list"><li>Porífera: sin tejidos. Cnidaria: simetría radial.</li><li>Platyhelminthes: acelomados. Nematodos: seudocelomados.</li><li>Anélida: lombriz. Echinodermata: sistema vascular acuífero.</li><li>Arthropoda: exoesqueleto quitinoso. Mollusca: gastrópodo, bivalvo, cefalópodo.</li><li>Chordata: notocordio, cordón nervioso dorsal, cola postanal.</li></ul></div>
+        </div>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- ═══════════ COBERTURA ═══════════ -->
+<section class="section" id="cobertura">
+  <div class="section-head"><div><h2>🗺️ Cobertura del curso</h2><p class="module-desc">Marca tu nivel en cada subtema. Se sincroniza con el mapa de dominio y las recomendaciones automáticas.</p></div></div>
+  <div class="card panel">
+    <h3 style="font-size:.95rem;margin-bottom:.5rem">Tema 4 — Las bases genéticas</h3>
+    <div class="subtopic-grid">
+      <div class="subtopic-item level-1"><div><strong>4.1 Organización del ADN</strong><p>Histonas, cromatina, cariotipo, ploidía.</p></div><select data-st="4.1" onchange="A.saveST('4.1',this.value)"><option>No visto</option><option>Estudiado</option><option>Practicado</option><option>Dominado</option></select></div>
+      <div class="subtopic-item level-2"><div><strong>4.1.1 Estructura cromosoma eucariota</strong></div><select data-st="4.1.1" onchange="A.saveST('4.1.1',this.value)"><option>No visto</option><option>Estudiado</option><option>Practicado</option><option>Dominado</option></select></div>
+      <div class="subtopic-item level-2"><div><strong>4.1.2 Empaquetamiento ADN</strong></div><select data-st="4.1.2" onchange="A.saveST('4.1.2',this.value)"><option>No visto</option><option>Estudiado</option><option>Practicado</option><option>Dominado</option></select></div>
+      <div class="subtopic-item level-2"><div><strong>4.1.3 Cariotipo y ploidía</strong></div><select data-st="4.1.3" onchange="A.saveST('4.1.3',this.value)"><option>No visto</option><option>Estudiado</option><option>Practicado</option><option>Dominado</option></select></div>
+      <div class="subtopic-item level-1"><div><strong>4.2 Ciclo celular</strong><p>Interfase G1, S, G2 y fase M.</p></div><select data-st="4.2" onchange="A.saveST('4.2',this.value)"><option>No visto</option><option>Estudiado</option><option>Practicado</option><option>Dominado</option></select></div>
+      <div class="subtopic-item level-2"><div><strong>4.2.3 Ciclo eucariota detallado</strong></div><select data-st="4.2.3" onchange="A.saveST('4.2.3',this.value)"><option>No visto</option><option>Estudiado</option><option>Practicado</option><option>Dominado</option></select></div>
+      <div class="subtopic-item level-2"><div><strong>4.2.4 Mitosis y citocinesis</strong></div><select data-st="4.2.4" onchange="A.saveST('4.2.4',this.value)"><option>No visto</option><option>Estudiado</option><option>Practicado</option><option>Dominado</option></select></div>
+      <div class="subtopic-item level-2"><div><strong>4.2.5 Control del ciclo celular</strong></div><select data-st="4.2.5" onchange="A.saveST('4.2.5',this.value)"><option>No visto</option><option>Estudiado</option><option>Practicado</option><option>Dominado</option></select></div>
+      <div class="subtopic-item level-1"><div><strong>4.3 Meiosis</strong><p>Fases, comparación con mitosis.</p></div><select data-st="4.3" onchange="A.saveST('4.3',this.value)"><option>No visto</option><option>Estudiado</option><option>Practicado</option><option>Dominado</option></select></div>
+      <div class="subtopic-item level-2"><div><strong>4.3.2 Fases de la meiosis</strong></div><select data-st="4.3.2" onchange="A.saveST('4.3.2',this.value)"><option>No visto</option><option>Estudiado</option><option>Practicado</option><option>Dominado</option></select></div>
+      <div class="subtopic-item level-1"><div><strong>4.4 Principios de herencia</strong></div><select data-st="4.4" onchange="A.saveST('4.4',this.value)"><option>No visto</option><option>Estudiado</option><option>Practicado</option><option>Dominado</option></select></div>
+      <div class="subtopic-item level-2"><div><strong>4.4.2 Leyes de Mendel</strong></div><select data-st="4.4.2" onchange="A.saveST('4.4.2',this.value)"><option>No visto</option><option>Estudiado</option><option>Practicado</option><option>Dominado</option></select></div>
+      <div class="subtopic-item level-2"><div><strong>4.4.10 Herencia ligada al sexo</strong></div><select data-st="4.4.10" onchange="A.saveST('4.4.10',this.value)"><option>No visto</option><option>Estudiado</option><option>Practicado</option><option>Dominado</option></select></div>
+      <div class="subtopic-item level-1"><div><strong>4.5 ADN y replicación</strong></div><select data-st="4.5" onchange="A.saveST('4.5',this.value)"><option>No visto</option><option>Estudiado</option><option>Practicado</option><option>Dominado</option></select></div>
+      <div class="subtopic-item level-1"><div><strong>4.6 Expresión génica</strong></div><select data-st="4.6" onchange="A.saveST('4.6',this.value)"><option>No visto</option><option>Estudiado</option><option>Practicado</option><option>Dominado</option></select></div>
+      <div class="subtopic-item level-1"><div><strong>4.7 Tecnología del ADN</strong></div><select data-st="4.7" onchange="A.saveST('4.7',this.value)"><option>No visto</option><option>Estudiado</option><option>Practicado</option><option>Dominado</option></select></div>
+    </div>
+    <h3 style="font-size:.95rem;margin:.9rem 0 .5rem">Tema 5 — Evolución</h3>
+    <div class="subtopic-grid">
+      <div class="subtopic-item level-1"><div><strong>5.1 Principios de evolución</strong></div><select data-st="5.1" onchange="A.saveST('5.1',this.value)"><option>No visto</option><option>Estudiado</option><option>Practicado</option><option>Dominado</option></select></div>
+      <div class="subtopic-item level-2"><div><strong>5.1.3 Evidencias de evolución</strong></div><select data-st="5.1.3" onchange="A.saveST('5.1.3',this.value)"><option>No visto</option><option>Estudiado</option><option>Practicado</option><option>Dominado</option></select></div>
+      <div class="subtopic-item level-1"><div><strong>5.2 Evolución de poblaciones</strong></div><select data-st="5.2" onchange="A.saveST('5.2',this.value)"><option>No visto</option><option>Estudiado</option><option>Practicado</option><option>Dominado</option></select></div>
+      <div class="subtopic-item level-2"><div><strong>5.2.2 Hardy-Weinberg</strong></div><select data-st="5.2.2" onchange="A.saveST('5.2.2',this.value)"><option>No visto</option><option>Estudiado</option><option>Practicado</option><option>Dominado</option></select></div>
+      <div class="subtopic-item level-2"><div><strong>5.2.5 Tipos de selección</strong></div><select data-st="5.2.5" onchange="A.saveST('5.2.5',this.value)"><option>No visto</option><option>Estudiado</option><option>Practicado</option><option>Dominado</option></select></div>
+      <div class="subtopic-item level-1"><div><strong>5.3 Especiación</strong></div><select data-st="5.3" onchange="A.saveST('5.3',this.value)"><option>No visto</option><option>Estudiado</option><option>Practicado</option><option>Dominado</option></select></div>
+    </div>
+    <h3 style="font-size:.95rem;margin:.9rem 0 .5rem">Tema 6 — Diversidad biológica</h3>
+    <div class="subtopic-grid">
+      <div class="subtopic-item level-1"><div><strong>6.1 Origen de la vida</strong></div><select data-st="6.1" onchange="A.saveST('6.1',this.value)"><option>No visto</option><option>Estudiado</option><option>Practicado</option><option>Dominado</option></select></div>
+      <div class="subtopic-item level-2"><div><strong>6.1.1 Formación del planeta</strong></div><select data-st="6.1.1" onchange="A.saveST('6.1.1',this.value)"><option>No visto</option><option>Estudiado</option><option>Practicado</option><option>Dominado</option></select></div>
+      <div class="subtopic-item level-2"><div><strong>6.1.2 Teorías del origen</strong></div><select data-st="6.1.2" onchange="A.saveST('6.1.2',this.value)"><option>No visto</option><option>Estudiado</option><option>Practicado</option><option>Dominado</option></select></div>
+      <div class="subtopic-item level-2"><div><strong>6.1.3 Protocélulas y primeras células</strong></div><select data-st="6.1.3" onchange="A.saveST('6.1.3',this.value)"><option>No visto</option><option>Estudiado</option><option>Practicado</option><option>Dominado</option></select></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ EXAMEN 2023 COMPLETO E ÍNTEGRO ═══════════ -->
+<section class="section" id="examenes">
+  <div class="section-head">
+    <div><h2>📝 Examen 2023 — Completo</h2><p class="module-desc">Examen original íntegro con todas sus partes. <strong>Modo Estudio</strong>: feedback inmediato tras revisar. <strong>Modo Examen</strong>: respuestas ocultas hasta el final.</p></div>
+    <div class="toolbar">
+      <div class="timer-d" id="examTimerDisp" style="display:none">⏱ 00:00</div>
+      <button class="btn" id="examTimerBtn" onclick="A.toggleExamTimer()">⏱ Temporizador</button>
+      <span class="badge" id="examModeBadge">Modo: Estudio</span>
+    </div>
+  </div>
+  <details class="card panel" open>
+    <summary class="summary-line" style="cursor:pointer">
+      <div class="summary-left"><span class="num">2023</span><div><strong>Examen 2023 · Biología</strong><div class="muted">Primera parte: Selección múltiple (40 puntos) · Segunda: Respuesta corta · Tercera: Asociación · Cuarta: Desarrollo</div></div></div>
+      <div class="summary-right"><span class="badge badge-blue">Examen completo</span></div>
+    </summary>
+    <div class="body">
+      <div class="warn" id="examModeInfo">📖 <strong>Modo Estudio activo:</strong> el feedback aparece inmediatamente al revisar cada sección. Cambia a Modo Examen en la barra superior para ocultar respuestas hasta el final.</div>
+
+      <!-- PARTE 1 -->
+      <div class="fullbox" style="background:var(--surface)"><strong>Primera parte: Marque con X · 1 punto c/u · Total: 40 puntos</strong></div>
+      <div id="exam2023Parts">
+        <!-- Q1–Q40 generadas por JS para no duplicar código -->
+      </div>
+      <div class="fullbox" id="p1summary" style="display:none;background:#fff7ed;border:1px solid #fed7aa"></div>
+      <div class="toolbar" style="margin-top:.8rem">
+        <button class="btn primary" onclick="A.reviewP1()">✅ Revisar parte 1</button>
+        <button class="btn" onclick="A.resetP1()">↺ Reiniciar</button>
+        <button class="btn" onclick="A.tts(document.querySelector('#exam2023Parts .sim-question strong')?.textContent||'')">🔊</button>
+      </div>
+
+      <!-- PARTE 2: RESPUESTA CORTA -->
+      <div class="fullbox" style="margin-top:1rem;background:var(--surface)"><strong>Segunda parte: Complete / Respuesta corta (20 puntos — 2 pts c/u)</strong><p class="muted" style="font-size:.85rem">Escribe el término que corresponde a cada definición.</p></div>
+      <div class="sim-question"><strong>1. Agente infeccioso acelular formado solo por ácido nucleico (ADN o ARN), rodeado por cápside proteica, requiere célula hospedadora. (2 pts)</strong><textarea id="s0" rows="2" placeholder="Escribe tu respuesta"></textarea><div class="feedback" id="fs0"></div></div>
+      <div class="sim-question"><strong>2. Agente patógeno formado por pequeñas moléculas de ARN monocatenario y circular sin cápside; sin proteínas ni lípidos. (2 pts)</strong><textarea id="s1" rows="2" placeholder="Escribe tu respuesta"></textarea><div class="feedback" id="fs1"></div></div>
+      <div class="sim-question"><strong>3. Partículas proteicas infecciosas que transforman proteínas normales de la membrana. (2 pts)</strong><textarea id="s2" rows="2" placeholder="Escribe tu respuesta"></textarea><div class="feedback" id="fs2"></div></div>
+      <div class="sim-question"><strong>4. Virus que tiene la capacidad de infectar bacterias. (2 pts)</strong><textarea id="s3" rows="2" placeholder="Escribe tu respuesta"></textarea><div class="feedback" id="fs3"></div></div>
+      <div class="sim-question"><strong>5. Asociación simbiótica entre un alga y un hongo. (2 pts)</strong><textarea id="s4" rows="2" placeholder="Escribe tu respuesta"></textarea><div class="feedback" id="fs4"></div></div>
+      <div class="sim-question"><strong>6. Asociaciones simbióticas entre la raíz y hongos. (2 pts)</strong><textarea id="s5" rows="2" placeholder="Escribe tu respuesta"></textarea><div class="feedback" id="fs5"></div></div>
+      <div class="sim-question"><strong>7. Plantas con estructuras múltiples de 5, raíz pivotante y nervaduras ramificadas. (2 pts)</strong><textarea id="s6" rows="2" placeholder="Escribe tu respuesta"></textarea><div class="feedback" id="fs6"></div></div>
+      <div class="sim-question"><strong>8. Término para describir cuando dos o más especies influyen mutuamente en su evolución. (2 pts)</strong><textarea id="s7" rows="2" placeholder="Escribe tu respuesta"></textarea><div class="feedback" id="fs7"></div></div>
+      <div class="sim-question"><strong>9. Organismo que no tiene cavidad corporal (ej. planarias, tenias, gusanos planos). (2 pts)</strong><textarea id="s8" rows="2" placeholder="Escribe tu respuesta"></textarea><div class="feedback" id="fs8"></div></div>
+      <div class="sim-question"><strong>10. Tipo de evolución con desarrollo de estructuras similares de ancestros distintos por procesos diferentes. (2 pts)</strong><textarea id="s9" rows="2" placeholder="Escribe tu respuesta"></textarea><div class="feedback" id="fs9"></div></div>
+      <div class="fullbox" id="p2summary" style="display:none;background:#eff6ff;border:1px solid #93c5fd"></div>
+      <div class="toolbar"><button class="btn primary" onclick="A.reviewP2()">✅ Revisar parte 2</button><button class="btn" onclick="A.resetP2()">↺</button></div>
+
+      <!-- PREGUNTAS FLEXIBLES -->
+      <div class="fullbox" style="margin-top:1rem;background:var(--surface)"><strong>Preguntas de respuesta abierta (revisión manual)</strong><p class="muted" style="font-size:.83rem">La respuesta esperada se muestra al presionar "Revisar". Antes no es visible.</p></div>
+      <div class="sim-question"><strong>11. Dos características humanas determinadas por herencia poligénica:</strong><textarea id="m0" rows="3" placeholder="Escribe tu respuesta"></textarea><div class="feedback" id="fm0" style="display:none"></div></div>
+      <div class="sim-question"><strong>12. Dos diferencias entre los dominios Archaea y Bacteria:</strong><textarea id="m1" rows="3" placeholder="Escribe tu respuesta"></textarea><div class="feedback" id="fm1" style="display:none"></div></div>
+      <div class="sim-question"><strong>13. Mencione tres tipos de prueba de la evolución:</strong><textarea id="m2" rows="3" placeholder="Escribe tu respuesta"></textarea><div class="feedback" id="fm2" style="display:none"></div></div>
+      <div class="sim-question"><strong>14. Cite dos factores que causan mutaciones en los seres vivos:</strong><textarea id="m3" rows="3" placeholder="Escribe tu respuesta"></textarea><div class="feedback" id="fm3" style="display:none"></div></div>
+      <div class="sim-question"><strong>15. Indique una importancia económica de las algas rojas:</strong><textarea id="m4" rows="3" placeholder="Escribe tu respuesta"></textarea><div class="feedback" id="fm4" style="display:none"></div></div>
+      <div class="fullbox" id="pmansummary" style="display:none;background:#f8fafc;border:1px solid #cbd5e1"></div>
+      <div class="toolbar"><button class="btn primary" onclick="A.reviewManual()">✅ Revisar respuestas abiertas</button><button class="btn" onclick="A.resetManual()">↺</button></div>
+
+      <!-- PARTE 3: ASOCIACIÓN 1 -->
+      <div class="fullbox" style="margin-top:1rem;background:var(--surface)"><strong>Tercera parte — Asociación 1 (10 puntos)</strong><p class="muted" style="font-size:.83rem">Escribe el número de la columna derecha que corresponde a cada elemento de la izquierda.</p></div>
+      <div class="fullbox" style="background:var(--surface);overflow:auto">
+        <table style="width:100%;border-collapse:collapse;min-width:820px">
+          <thead><tr><th style="text-align:left;padding:.6rem;border:1px solid #e5e7eb;background:#f8fafc;width:38%">Columna izquierda</th><th style="padding:.6rem;border:1px solid #e5e7eb;background:#f8fafc;width:14%">Resp.</th><th style="text-align:left;padding:.6rem;border:1px solid #e5e7eb;background:#f8fafc">Columna derecha</th></tr></thead>
+          <tbody>
+            <tr><td style="padding:.6rem;border:1px solid #e5e7eb">1. Anélida</td><td style="padding:.6rem;border:1px solid #e5e7eb"><input id="a1_0" type="text" inputmode="numeric" placeholder="__" style="width:60px"><div class="feedback" id="fa1_0" style="display:inline"></div></td><td style="padding:.6rem;border:1px solid #e5e7eb">Chordata</td></tr>
+            <tr><td style="padding:.6rem;border:1px solid #e5e7eb">2. Seudocelomados</td><td style="padding:.6rem;border:1px solid #e5e7eb"><input id="a1_1" type="text" inputmode="numeric" placeholder="__" style="width:60px"><div class="feedback" id="fa1_1" style="display:inline"></div></td><td style="padding:.6rem;border:1px solid #e5e7eb">Arthropoda</td></tr>
+            <tr><td style="padding:.6rem;border:1px solid #e5e7eb">3. Aves</td><td style="padding:.6rem;border:1px solid #e5e7eb"><input id="a1_2" type="text" inputmode="numeric" placeholder="__" style="width:60px"><div class="feedback" id="fa1_2" style="display:inline"></div></td><td style="padding:.6rem;border:1px solid #e5e7eb">Platyhelminthes</td></tr>
+            <tr><td style="padding:.6rem;border:1px solid #e5e7eb">4. Cestodos, planarias</td><td style="padding:.6rem;border:1px solid #e5e7eb"><input id="a1_3" type="text" inputmode="numeric" placeholder="__" style="width:60px"><div class="feedback" id="fa1_3" style="display:inline"></div></td><td style="padding:.6rem;border:1px solid #e5e7eb">Lombriz de tierra</td></tr>
+            <tr><td style="padding:.6rem;border:1px solid #e5e7eb">5. Notocordio, cordón nervioso dorsal, cola postanal</td><td style="padding:.6rem;border:1px solid #e5e7eb"><input id="a1_4" type="text" inputmode="numeric" placeholder="__" style="width:60px"><div class="feedback" id="fa1_4" style="display:inline"></div></td><td style="padding:.6rem;border:1px solid #e5e7eb">Cnidaria</td></tr>
+            <tr><td style="padding:.6rem;border:1px solid #e5e7eb">6. Mollusca</td><td style="padding:.6rem;border:1px solid #e5e7eb"><input id="a1_5" type="text" inputmode="numeric" placeholder="__" style="width:60px"><div class="feedback" id="fa1_5" style="display:inline"></div></td><td style="padding:.6rem;border:1px solid #e5e7eb">Echinodermata</td></tr>
+            <tr><td style="padding:.6rem;border:1px solid #e5e7eb">7. Sistema vascular acuífero</td><td style="padding:.6rem;border:1px solid #e5e7eb"><input id="a1_6" type="text" inputmode="numeric" placeholder="__" style="width:60px"><div class="feedback" id="fa1_6" style="display:inline"></div></td><td style="padding:.6rem;border:1px solid #e5e7eb">Porífera</td></tr>
+            <tr><td style="padding:.6rem;border:1px solid #e5e7eb">8. Lepidóptero, Díptero</td><td style="padding:.6rem;border:1px solid #e5e7eb"><input id="a1_7" type="text" inputmode="numeric" placeholder="__" style="width:60px"><div class="feedback" id="fa1_7" style="display:inline"></div></td><td style="padding:.6rem;border:1px solid #e5e7eb">Nematodos</td></tr>
+            <tr><td style="padding:.6rem;border:1px solid #e5e7eb">9. Animales sin tejido</td><td style="padding:.6rem;border:1px solid #e5e7eb"><input id="a1_8" type="text" inputmode="numeric" placeholder="__" style="width:60px"><div class="feedback" id="fa1_8" style="display:inline"></div></td><td style="padding:.6rem;border:1px solid #e5e7eb">Extremidades anteriores modificadas para volar</td></tr>
+            <tr><td style="padding:.6rem;border:1px solid #e5e7eb">10. Simetría radial</td><td style="padding:.6rem;border:1px solid #e5e7eb"><input id="a1_9" type="text" inputmode="numeric" placeholder="__" style="width:60px"><div class="feedback" id="fa1_9" style="display:inline"></div></td><td style="padding:.6rem;border:1px solid #e5e7eb">Gastrópodo, bivalvo, pulpo</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="fullbox" id="pa1summary" style="display:none;background:#fefce8;border:1px solid #fde68a"></div>
+      <div class="toolbar"><button class="btn primary" onclick="A.reviewA1()">✅ Revisar asociación 1</button><button class="btn" onclick="A.resetA1()">↺</button></div>
+
+      <!-- PARTE 3: ASOCIACIÓN 2 -->
+      <div class="fullbox" style="margin-top:1rem;background:var(--surface)"><strong>Tercera parte — Asociación 2 (10 puntos)</strong></div>
+      <div class="fullbox" style="background:var(--surface);overflow:auto">
+        <table style="width:100%;border-collapse:collapse;min-width:820px">
+          <thead><tr><th style="text-align:left;padding:.6rem;border:1px solid #e5e7eb;background:#f8fafc;width:38%">Columna izquierda</th><th style="padding:.6rem;border:1px solid #e5e7eb;background:#f8fafc;width:14%">Resp.</th><th style="text-align:left;padding:.6rem;border:1px solid #e5e7eb;background:#f8fafc">Columna derecha</th></tr></thead>
+          <tbody>
+            <tr><td style="padding:.6rem;border:1px solid #e5e7eb">1. Mutaciones</td><td style="padding:.6rem;border:1px solid #e5e7eb"><input id="a2_0" type="text" inputmode="numeric" placeholder="__" style="width:60px"><div class="feedback" id="fa2_0" style="display:inline"></div></td><td style="padding:.6rem;border:1px solid #e5e7eb">Efecto fundador</td></tr>
+            <tr><td style="padding:.6rem;border:1px solid #e5e7eb">2. Consanguinidad</td><td style="padding:.6rem;border:1px solid #e5e7eb"><input id="a2_1" type="text" inputmode="numeric" placeholder="__" style="width:60px"><div class="feedback" id="fa2_1" style="display:inline"></div></td><td style="padding:.6rem;border:1px solid #e5e7eb">Comprende transformaciones globales en la evolución (ej. origen de mamíferos)</td></tr>
+            <tr><td style="padding:.6rem;border:1px solid #e5e7eb">3. Herencia de caracteres adquiridos</td><td style="padding:.6rem;border:1px solid #e5e7eb"><input id="a2_2" type="text" inputmode="numeric" placeholder="__" style="width:60px"><div class="feedback" id="fa2_2" style="display:inline"></div></td><td style="padding:.6rem;border:1px solid #e5e7eb">Aumenta el flujo de genes, provoca mayor diversidad</td></tr>
+            <tr><td style="padding:.6rem;border:1px solid #e5e7eb">4. Poliploidía</td><td style="padding:.6rem;border:1px solid #e5e7eb"><input id="a2_3" type="text" inputmode="numeric" placeholder="__" style="width:60px"><div class="feedback" id="fa2_3" style="display:inline"></div></td><td style="padding:.6rem;border:1px solid #e5e7eb">Los caracteres se heredan de padres a hijos</td></tr>
+            <tr><td style="padding:.6rem;border:1px solid #e5e7eb">5. Ocurre cuando un número pequeño de organismos funda colonias aisladas</td><td style="padding:.6rem;border:1px solid #e5e7eb"><input id="a2_4" type="text" inputmode="numeric" placeholder="__" style="width:60px"><div class="feedback" id="fa2_4" style="display:inline"></div></td><td style="padding:.6rem;border:1px solid #e5e7eb">Causa original y principal de la variación genética</td></tr>
+            <tr><td style="padding:.6rem;border:1px solid #e5e7eb">6. Microevolución</td><td style="padding:.6rem;border:1px solid #e5e7eb"><input id="a2_5" type="text" inputmode="numeric" placeholder="__" style="width:60px"><div class="feedback" id="fa2_5" style="display:inline"></div></td><td style="padding:.6rem;border:1px solid #e5e7eb">Lamarck</td></tr>
+            <tr><td style="padding:.6rem;border:1px solid #e5e7eb">7. Darwin y Wallace</td><td style="padding:.6rem;border:1px solid #e5e7eb"><input id="a2_6" type="text" inputmode="numeric" placeholder="__" style="width:60px"><div class="feedback" id="fa2_6" style="display:inline"></div></td><td style="padding:.6rem;border:1px solid #e5e7eb">Creacionismo</td></tr>
+            <tr><td style="padding:.6rem;border:1px solid #e5e7eb">8. Macroevolución</td><td style="padding:.6rem;border:1px solid #e5e7eb"><input id="a2_7" type="text" inputmode="numeric" placeholder="__" style="width:60px"><div class="feedback" id="fa2_7" style="display:inline"></div></td><td style="padding:.6rem;border:1px solid #e5e7eb">Evolución a pequeña escala dentro de una única población</td></tr>
+            <tr><td style="padding:.6rem;border:1px solid #e5e7eb">9. La Tierra es el centro del universo y en una sola época de creación se pobló el mundo</td><td style="padding:.6rem;border:1px solid #e5e7eb"><input id="a2_8" type="text" inputmode="numeric" placeholder="__" style="width:60px"><div class="feedback" id="fa2_8" style="display:inline"></div></td><td style="padding:.6rem;border:1px solid #e5e7eb">Más de dos copias de cromosomas; diploide se convierte en tetraploide</td></tr>
+            <tr><td style="padding:.6rem;border:1px solid #e5e7eb">10. Migración</td><td style="padding:.6rem;border:1px solid #e5e7eb"><input id="a2_9" type="text" inputmode="numeric" placeholder="__" style="width:60px"><div class="feedback" id="fa2_9" style="display:inline"></div></td><td style="padding:.6rem;border:1px solid #e5e7eb">Muchos genes recesivos permanecen ocultos en heterocigosis</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="fullbox" id="pa2summary" style="display:none;background:#fefce8;border:1px solid #fde68a"></div>
+      <div class="toolbar"><button class="btn primary" onclick="A.reviewA2()">✅ Revisar asociación 2</button><button class="btn" onclick="A.resetA2()">↺</button></div>
+
+      <!-- PARTE 4: DESARROLLO -->
+      <div class="fullbox" style="margin-top:1rem;background:var(--surface)"><strong>Cuarta parte — Desarrollo</strong></div>
+
+      <!-- DESARROLLO 1: H-W -->
+      <div class="sim-question">
+        <strong>1. En una población en equilibrio H-W, la frecuencia alélica de "a" es 0,3. ¿Cuál sería la frecuencia esperada de heterocigotos "Aa"? (3 pts)</strong>
+        <div class="fullbox" style="margin-top:.7rem;background:var(--surface)">
+          <strong>1a) Cálculo:</strong>
+          <input id="hw_ans" type="text" placeholder="Escribe tu respuesta (ej. 0.42)" style="margin-top:.4rem">
+          <div class="feedback" id="fb_hw_a"></div>
+        </div>
+        <div class="fullbox" style="margin-top:.7rem;background:var(--surface)">
+          <strong>1b) Cuatro condiciones del equilibrio H-W (4 pts)</strong>
+          <textarea id="hw_cond" rows="5" placeholder="Enumera las cuatro condiciones necesarias"></textarea>
+          <div class="feedback" id="fb_hw_b" style="display:none"></div>
+        </div>
+      </div>
+      <div class="fullbox" id="pdev1sum" style="display:none;background:#ecfeff;border:1px solid #a5f3fc"></div>
+      <div class="toolbar"><button class="btn primary" onclick="A.reviewDev1()">✅ Revisar desarrollo 1</button><button class="btn" onclick="A.resetDev1()">↺</button></div>
+
+      <!-- DESARROLLO 2: SELECCIÓN NATURAL -->
+      <div class="sim-question" style="margin-top:1rem">
+        <strong>2. La selección natural puede conducir a distintos patrones de cambio evolutivo. Los biólogos los agrupan en tres categorías (A, B y C).</strong>
+        <p style="margin:.4rem 0"><strong>I.</strong> ¿Qué tipo de selección es A, B y C? (3 pts) &nbsp;<strong>II.</strong> Explique lo que ocurre en cada caso. (6 pts)</p>
+        <div class="fullbox" style="margin:.7rem 0;background:var(--surface);min-height:60px;display:grid;place-items:center;text-align:center;padding:1rem"><span class="muted">Imagen de patrones de selección natural A, B y C — pendiente de insertar</span></div>
+        <div class="fullbox" style="background:var(--surface)"><strong>A:</strong><textarea id="dev2_a" rows="3" placeholder="Tipo de selección y explicación de A"></textarea></div>
+        <div class="fullbox" style="margin-top:.5rem;background:var(--surface)"><strong>B:</strong><textarea id="dev2_b" rows="3" placeholder="Tipo de selección y explicación de B"></textarea></div>
+        <div class="fullbox" style="margin-top:.5rem;background:var(--surface)"><strong>C:</strong><textarea id="dev2_c" rows="3" placeholder="Tipo de selección y explicación de C"></textarea></div>
+        <div class="feedback" id="fb_dev2" style="display:none"></div>
+      </div>
+      <div class="toolbar"><button class="btn primary" onclick="A.reviewDev2()">✅ Revisar desarrollo 2</button><button class="btn" onclick="A.resetDev2()">↺</button></div>
+
+      <!-- DESARROLLO 3: HONGO -->
+      <div class="sim-question" style="margin-top:1rem">
+        <strong>3. Ilustre en un diagrama la etapa general de reproducción asexual de un hongo. (1 pt)</strong>
+        <p style="margin:.3rem 0">Señale en el dibujo las esporas y el micelio. (1 pt)</p>
+        <p style="margin:.3rem 0">Las esporas se producen por mitosis o por meiosis. (2 pts)</p>
+        <div class="fullbox" style="margin-top:.7rem;background:var(--surface)"><strong>Nota:</strong> el diagrama se realiza fuera de la página (en papel). Revisión manual.<br><textarea id="dev3_note" rows="3" placeholder="Notas teóricas de apoyo (opcional)"></textarea></div>
+        <div class="feedback" id="fb_dev3" style="display:none"></div>
+      </div>
+      <div class="toolbar"><button class="btn primary" onclick="A.reviewDev3()">✅ Revisar desarrollo 3</button><button class="btn" onclick="A.resetDev3()">↺</button></div>
+
+      <!-- RESULTADO GLOBAL -->
+      <div class="fullbox" id="globalDiag" style="display:none;margin-top:1rem;background:#f0fdf4;border:1px solid #86efac;font-size:.85rem;line-height:1.8"></div>
+      <div id="globalResult" style="margin-top:1rem;padding:1rem;border-radius:18px;background:#ede9fe;border:1px solid #c4b5fd">
+        <strong>Resultado general del examen:</strong><br>
+        Puntos obtenidos: <strong id="glob_earned">—</strong> / <strong id="glob_possible">—</strong> &nbsp;|&nbsp; Calificación: <strong id="glob_pct">—</strong>
+      </div>
+      <div class="toolbar" style="margin-top:.8rem"><button class="btn primary" onclick="A.calcGlobal()">📊 Calcular resultado general</button></div>
+    </div>
+  </details>
+</section>
+
+<!-- ═══════════ SIMULACROS ═══════════ -->
+<section class="section" id="simulacros">
+  <div class="section-head">
+    <div><h2>⚡ Simulacros adaptativos</h2><p class="module-desc">El banco elige preguntas según tus debilidades reales. Más fallos en un tema → más preguntas de ese tema.</p></div>
+    <div class="toolbar">
+      <button class="btn primary" onclick="A.startSim('gen')">🧬 Genética</button>
+      <button class="btn" onclick="A.startSim('evo')">🌍 Evolución</button>
+      <button class="btn" onclick="A.startSim('ori')">🌱 Origen</button>
+      <button class="btn" onclick="A.startSim('all')">🔀 Mezclado</button>
+      <select id="simDiff" style="width:auto;padding:.4rem .7rem;font-size:.8rem"><option value="0">Fácil</option><option value="1" selected>Medio</option><option value="2">Difícil</option></select>
+    </div>
+  </div>
+  <div class="card panel">
+    <div id="simQText" style="font-weight:600;font-size:1rem;margin-bottom:.7rem">Elige una categoría para comenzar.</div>
+    <div id="simMcq" class="mcq"></div>
+    <div class="toolbar" style="margin-top:.7rem">
+      <button class="btn primary" id="simAnsBtn" onclick="A.answerSim()">Responder</button>
+      <button class="btn" id="simNextBtn" onclick="A.nextSim()" style="display:none">Siguiente ›</button>
+      <button class="btn" onclick="A.tts(document.getElementById('simQText').textContent)">🔊</button>
+    </div>
+    <div class="feedback" id="simFb"></div>
+    <p class="muted" style="font-size:.82rem;margin-top:.5rem">Pregunta <span id="simIdx">0</span>/<span id="simTot">0</span> · Aciertos: <span id="simH">0</span> · Errores: <span id="simM">0</span></p>
+  </div>
+</section>
+
+<!-- ═══════════ DESARROLLO LIBRE ═══════════ -->
+<section class="section" id="desarrollo">
+  <div class="section-head"><div><h2>✏️ Desarrollo libre</h2><p class="module-desc">Espacio para practicar respuestas abiertas, teoría corta o esquemas. Se guarda automáticamente.</p></div></div>
+  <div class="card panel">
+    <textarea id="devLibre" rows="8" placeholder="Escribe aquí tu desarrollo libre…" oninput="A.saveDevLibre(this.value)" style="margin-bottom:.7rem"></textarea>
+    <div class="toolbar">
+      <button class="btn" onclick="A.tts(document.getElementById('devLibre').value)">🔊 Leer</button>
+      <button class="btn danger" onclick="if(confirm('¿Borrar el texto?')){document.getElementById('devLibre').value='';A.saveDevLibre('')}">🗑 Borrar</button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ JUEGO ═══════════ -->
+<section class="section" id="juego">
+  <div class="section-head"><div><h2>🎮 Juego de preguntas</h2><p class="module-desc">Rondas cronometradas de 15 segundos por pregunta. Más rapidez = más puntos. Resultados se guardan y vinculan con XP.</p></div></div>
+  <div class="card panel">
+    <div class="toolbar">
+      <button class="btn primary" onclick="A.startGame('gen')">🧬 Genética</button>
+      <button class="btn" onclick="A.startGame('evo')">🌍 Evolución</button>
+      <button class="btn" onclick="A.startGame('ori')">🌱 Origen</button>
+      <button class="btn" onclick="A.startGame('all')">🔀 Todo</button>
+      <button class="btn danger" onclick="A.resetGame()">↺</button>
+    </div>
+    <div class="grid2" style="margin-top:1rem">
+      <div class="game-card">
+        <div class="toolbar" style="justify-content:space-between;margin-bottom:.6rem">
+          <strong id="gMode">Sin iniciar</strong>
+          <span class="badge badge-yellow" id="gStep">0/0</span>
+          <span class="timer-d" id="gTimer">15</span>
+        </div>
+        <div id="gQuestion" style="font-weight:600;margin-bottom:.6rem">Elige un modo.</div>
+        <div id="gMcq" class="mcq"></div>
+        <div class="feedback" id="gFb"></div>
+      </div>
+      <div class="game-card">
+        <strong>Marcador</strong>
+        <div class="grid2" style="margin-top:.8rem">
+          <div class="mini"><strong>Puntos</strong><div class="val" id="gScore">0</div></div>
+          <div class="mini"><strong>Aciertos</strong><div class="val" id="gHits" style="color:var(--green)">0</div></div>
+          <div class="mini"><strong>Errores</strong><div class="val" id="gMiss" style="color:var(--red)">0</div></div>
+          <div class="mini"><strong>Mejor</strong><div class="val" id="gBest">0</div></div>
+        </div>
+        <div class="muted" style="font-size:.82rem;margin-top:.6rem" id="gState">Esperando inicio</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ FLASHCARDS ═══════════ -->
+<section class="section" id="flashcards">
+  <div class="section-head"><div><h2>🃏 Flashcards</h2><p class="module-desc">Tarjetas de conceptos clave + errores cometidos en simulacros. Úsalas para repasar términos y definiciones.</p></div>
+    <div class="toolbar">
+      <button class="btn" onclick="A.prevFlash()">‹</button>
+      <button class="btn primary" onclick="A.flipFlash()">Voltear</button>
+      <button class="btn" onclick="A.nextFlash()">›</button>
+      <button class="btn" onclick="A.markFlash(true)">✔ Dominada</button>
+      <button class="btn danger" onclick="A.markFlash(false)">✘ Repasar</button>
+      <button class="btn" onclick="A.shuffleFlash()">🔀</button>
+      <button class="btn" onclick="A.tts(document.getElementById('flashFront').textContent+'. '+document.getElementById('flashBack').textContent)">🔊</button>
+    </div>
+  </div>
+  <div class="grid2">
+    <div class="subitem flash-card-wrap" id="flashCard" onclick="A.flipFlash()">
+      <div class="flash-front" id="flashFront">Cargando…</div>
+      <div class="flash-back" id="flashBack"></div>
+    </div>
+    <div class="panel">
+      <strong>Progreso flashcards</strong>
+      <div style="margin-top:.7rem">
+        <div style="display:flex;justify-content:space-between;font-size:.83rem;margin-bottom:.3rem"><span>Dominadas</span><span id="flashDomN">0</span></div>
+        <div class="prog-bar"><div class="prog-fill" id="flashProg" style="width:0%"></div></div>
+        <p class="muted" style="font-size:.8rem;margin-top:.5rem" id="flashStatus">Tarjeta 1/N</p>
+      </div>
+      <div style="margin-top:1rem">
+        <strong style="font-size:.85rem">Filtro</strong>
+        <div class="toolbar" style="margin-top:.4rem">
+          <button class="btn" style="font-size:.75rem;padding:.35rem .6rem" onclick="A.filterFlash('all')">Todas</button>
+          <button class="btn" style="font-size:.75rem;padding:.35rem .6rem" onclick="A.filterFlash('repasar')">Repasar</button>
+          <button class="btn" style="font-size:.75rem;padding:.35rem .6rem" onclick="A.filterFlash('dom')">Dominadas</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ POMODORO ═══════════ -->
+<section class="section" id="pomodoro">
+  <div class="section-head"><div><h2>🍅 Pomodoro</h2><p class="module-desc">Técnica de intervalos: 25 min estudio → 5 min descanso → repetir. Cada ciclo completo suma XP y registra tiempo.</p></div></div>
+  <div class="grid2">
+    <div class="card panel">
+      <div class="pomo-display" id="pomoDis">25:00</div>
+      <div style="text-align:center;font-weight:700;color:var(--muted);margin:.5rem 0" id="pomoPhase">📖 Estudio</div>
+      <div class="toolbar" style="justify-content:center">
+        <button class="btn primary" onclick="A.togglePomo()">▶/⏸</button>
+        <button class="btn" onclick="A.resetPomo()">↺</button>
+      </div>
+    </div>
+    <div class="panel">
+      <strong>Configuración</strong>
+      <div style="display:grid;gap:.6rem;margin-top:.8rem">
+        <label style="font-size:.85rem">Estudio (min): <input type="number" id="pomoW" value="25" min="1" max="90" style="width:70px" onchange="A.resetPomo()"></label>
+        <label style="font-size:.85rem">Descanso corto: <input type="number" id="pomoS" value="5" min="1" max="30" style="width:70px" onchange="A.resetPomo()"></label>
+        <label style="font-size:.85rem">Descanso largo: <input type="number" id="pomoL" value="15" min="1" max="60" style="width:70px" onchange="A.resetPomo()"></label>
+        <div class="mini"><strong>Pomodoros completados</strong><div class="val" id="pomoCount">0</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ LOGROS ═══════════ -->
+<section class="section" id="logros">
+  <div class="section-head"><div><h2>🏆 Logros</h2><p class="module-desc">Se desbloquean automáticamente al alcanzar hitos reales. No son decorativos: cada uno requiere acción.</p></div></div>
+  <div class="ach-grid" id="achGrid"></div>
+</section>
+
+<!-- ═══════════ MAPA DE DOMINIO ═══════════ -->
+<section class="section" id="mapa">
+  <div class="section-head"><div><h2>🗾 Mapa de dominio</h2><p class="module-desc">Muestra tu nivel real por subtema según tus respuestas. 🔴 0–39% · 🟡 40–59% · 🟢 60–79% · 🔵 80–100%. Haz clic en un chip para ver estadísticas.</p></div>
+    <div class="toolbar">
+      <button class="btn" onclick="A.filterDomain('all')">Todos</button>
+      <button class="btn" onclick="A.filterDomain('t4')">T4</button>
+      <button class="btn" onclick="A.filterDomain('t5')">T5</button>
+      <button class="btn" onclick="A.filterDomain('t6')">T6</button>
+    </div>
+  </div>
+  <div class="card panel">
+    <div id="domainWrap" style="display:flex;flex-wrap:wrap;padding:.3rem"></div>
+    <div id="domainDetail" style="display:none;margin-top:.8rem;padding:.8rem;border-radius:14px;background:var(--soft);border:1px solid var(--border);font-size:.85rem"></div>
+  </div>
+</section>
+
+<!-- ═══════════ PANEL PERSONAL ═══════════ -->
+<section class="section" id="panel">
+  <div class="section-head"><div><h2>👤 Panel personal</h2><p class="module-desc">Progreso unificado por tema. Un solo sistema centralizado — no hay duplicaciones.</p></div>
+    <div class="toolbar">
+      <button class="btn" onclick="A.exportData()">⬇️ Guardar progreso</button>
+      <button class="btn" onclick="document.getElementById('importFile').click()">⬆️ Restaurar progreso</button>
+      <button class="btn danger" onclick="if(confirm('¿Borrar TODO?'))A.resetAll()">🗑 Reset</button>
+    </div>
+  </div>
+  <div class="card panel">
+    <div class="results-row"><div><strong>Tema 4 · Genética y biología molecular</strong><p class="muted" style="font-size:.82rem">Ciclo celular, herencia, ADN, expresión génica.</p></div><span class="badge" id="lblT4">No visto</span><select data-topic="t4" onchange="A.syncTopic('t4',this.value)"><option>No visto</option><option>Estudiado</option><option>Practicado</option><option>Dominado</option></select></div>
+    <div class="results-row"><div><strong>Tema 5 · Evolución</strong><p class="muted" style="font-size:.82rem">Hardy-Weinberg, selección, especiación.</p></div><span class="badge" id="lblT5">No visto</span><select data-topic="t5" onchange="A.syncTopic('t5',this.value)"><option>No visto</option><option>Estudiado</option><option>Practicado</option><option>Dominado</option></select></div>
+    <div class="results-row"><div><strong>Tema 6 · Diversidad biológica</strong><p class="muted" style="font-size:.82rem">Origen de la vida, dominios, reinos.</p></div><span class="badge" id="lblT6">No visto</span><select data-topic="t6" onchange="A.syncTopic('t6',this.value)"><option>No visto</option><option>Estudiado</option><option>Practicado</option><option>Dominado</option></select></div>
+  </div>
+  <div class="grid2" style="margin-top:1rem">
+    <div class="result-box">
+      <strong>Temas más débiles (según respuestas)</strong>
+      <div id="weakTopics" style="margin-top:.6rem;font-size:.85rem;color:var(--muted)">Sin datos aún.</div>
+    </div>
+    <div class="result-box">
+      <strong>Errores frecuentes detectados</strong>
+      <ul class="list" style="font-size:.83rem">
+        <li>Cromátidas hermanas ≠ cromosomas homólogos</li>
+        <li>Proporciones 9:3:3:1 con ligamiento (incorrecto)</li>
+        <li>Codones en ADN en vez de ARNm</li>
+        <li>Apoptosis ≠ cualquier muerte celular</li>
+        <li>Interfase ≠ reposo</li>
+      </ul>
+      <div id="dynamicErrors" style="margin-top:.5rem;font-size:.82rem;color:var(--red)"></div>
+    </div>
+  </div>
+  <!-- FEEDBACK -->
+  <div class="card panel" style="margin-top:1rem">
+    <h3 style="font-size:1rem;margin-top:0">💬 Opinión / Reportar error</h3>
+    <p class="muted" style="font-size:.82rem">Tu feedback se guarda localmente y es visible en el panel de administración.</p>
+    <select id="fbType" style="width:auto;margin-bottom:.5rem"><option>Sugerencia de mejora</option><option>Error en contenido</option><option>Tema más difícil</option><option>Módulo poco útil</option><option>Otro</option></select>
+    <textarea id="fbText" rows="3" placeholder="Describe tu comentario…"></textarea>
+    <button class="btn primary" style="margin-top:.5rem;font-size:.82rem" onclick="A.submitFeedback()">Enviar</button>
+    <div class="feedback" id="fbResult"></div>
+  </div>
+</section>
+
+<!-- ═══════════ ADMIN ═══════════ (oculto por defecto) -->
+<section class="section" id="adminSection" style="display:none">
+  <div class="section-head"><div><h2>⚙️ Panel Administración</h2><p class="module-desc">Acceso exclusivo. Ver estadísticas globales, feedback, respuestas esperadas y control general.</p></div>
+    <button class="btn danger" onclick="A.closeAdmin()">Cerrar admin</button>
+  </div>
+  <div class="admin-panel">
+    <h3>⚙️ Panel Admin</h3>
+    <div class="tab-bar">
+      <button class="tab-btn active" onclick="A.adminTab('stats')">Estadísticas</button>
+      <button class="tab-btn" onclick="A.adminTab('feedback')">Feedback</button>
+      <button class="tab-btn" onclick="A.adminTab('answers')">Respuestas esperadas</button>
+      <button class="tab-btn" onclick="A.adminTab('control')">Control</button>
+    </div>
+    <div class="tab-pane active" id="adminStats">
+      <div class="grid3" id="adminStatCards"></div>
+    </div>
+    <div class="tab-pane" id="adminFeedback">
+      <div id="adminFbList" style="font-size:.85rem"></div>
+    </div>
+    <div class="tab-pane" id="adminAnswers">
+      <p class="muted" style="font-size:.85rem">Aquí puedes revisar las respuestas esperadas configuradas para la parte corta y las preguntas manuales.</p>
+      <div id="adminAnswerList" style="font-size:.85rem;margin-top:.6rem"></div>
+    </div>
+    <div class="tab-pane" id="adminControl">
+      <div class="toolbar">
+        <button class="btn danger" onclick="if(confirm('¿Borrar TODO el progreso?'))A.resetAll()">🗑 Reset total</button>
+        <button class="btn" onclick="A.exportData()">⬇️ Exportar datos</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="foot" style="margin-top:1rem"><p>Biología General · Plataforma Avanzada v4 · Examen 2023 completo e íntegro · localStorage + módulos funcionales · Sin funciones decorativas.</p></footer>
+</div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════
+//  MÓDULO: STATE / STORAGE
+// ═══════════════════════════════════════════════════════════
+const SK='bioV4';
+function defaultState(){
+  return{
+    settings:{mode:'estudio',theme:'default',fontSize:16},
+    progress:{topics:{t4:'No visto',t5:'No visto',t6:'No visto'},subtopics:{}},
+    stats:{total:0,hits:0,miss:0,xp:0,level:1,streak:0,lastDate:'',
+      simsDone:0,flashDom:0,pomodoros:0,timerSecs:0,examAttempts:[],
+      themeHits:{gen:0,evo:0,ori:0},themeMiss:{gen:0,evo:0,ori:0},
+      sessions:[],activity:[],topErrors:{}},
+    exams:{sections:{}},
+    achievements:{},flashProgress:{},
+    game:{best:0,history:[]},
+    devLibre:'',feedback:[],
+    admin:{enabled:false},
+    lastVisit:{section:'dashboard',ts:0}
+  };
+}
+let S=loadState();
+function loadState(){try{const d=localStorage.getItem(SK);return d?{...defaultState(),...JSON.parse(d)}:defaultState();}catch{return defaultState();}}
+function saveState(){try{localStorage.setItem(SK,JSON.stringify(S));}catch{}}
+function resetAll(){S=defaultState();saveState();location.reload();}
+
+// ═══════════════════════════════════════════════════════════
+//  MÓDULO: UI UTILS
+// ═══════════════════════════════════════════════════════════
+let toastT;
+function toast(msg,dur=3000){const el=document.getElementById('toastEl');el.textContent=msg;el.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>el.classList.remove('show'),dur);}
+function norm(s){return String(s).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]/g,' ').trim();}
+function saveSec(id,e,p){const el=document.getElementById(id);if(!el)return;el.dataset.r='1';el.dataset.e=e;el.dataset.p=p;}
+
+// ═══════════════════════════════════════════════════════════
+//  MÓDULO: THEME
+// ═══════════════════════════════════════════════════════════
+const THEMES=['default','theme-dark','theme-ocean'];
+let themeIdx=THEMES.indexOf(S.settings.theme||'default');if(themeIdx<0)themeIdx=0;
+function toggleTheme(){themeIdx=(themeIdx+1)%THEMES.length;S.settings.theme=THEMES[themeIdx];document.body.className=S.settings.theme==='default'?'':S.settings.theme;saveState();toast(['Tema Claro','Tema Oscuro','Tema Océano'][themeIdx]);}
+document.body.className=S.settings.theme==='default'?'':S.settings.theme;
+
+// ═══════════════════════════════════════════════════════════
+//  MÓDULO: MODE
+// ═══════════════════════════════════════════════════════════
+function setMode(m){
+  S.settings.mode=m;saveState();
+  document.getElementById('btnEstudio').classList.toggle('active',m==='estudio');
+  document.getElementById('btnExamen').classList.toggle('active',m==='examen');
+  document.getElementById('modeLbl').textContent='Modo: '+(m==='estudio'?'Estudio':'Examen');
+  document.getElementById('examModeBadge').textContent='Modo: '+(m==='estudio'?'Estudio':'Examen');
+  document.getElementById('examModeInfo').innerHTML=m==='estudio'
+    ?'📖 <strong>Modo Estudio activo:</strong> feedback inmediato al revisar. Pistas y explicaciones disponibles.'
+    :'📝 <strong>Modo Examen activo:</strong> respuestas ocultas hasta que termines y presiones "Calcular resultado general".';
+  toast(m==='estudio'?'📖 Modo Estudio: feedback inmediato y pistas.':'📝 Modo Examen: respuestas al final.');
+}
+
+// ═══════════════════════════════════════════════════════════
+//  MÓDULO: TIMER
+// ═══════════════════════════════════════════════════════════
+let timerOn=false,timerSecs=S.stats.timerSecs||0,timerInt=null;
+function timerToggle(){timerOn=!timerOn;if(timerOn){timerInt=setInterval(()=>{timerSecs++;S.stats.timerSecs=timerSecs;renderTimer();if(timerSecs%30===0)saveState();},1000);}else clearInterval(timerInt);}
+function timerReset(){timerOn=false;clearInterval(timerInt);timerSecs=0;S.stats.timerSecs=0;renderTimer();saveState();}
+function renderTimer(){const h=Math.floor(timerSecs/3600),m=Math.floor((timerSecs%3600)/60),s=timerSecs%60;document.getElementById('globalTimer').textContent=[h,m,s].map(x=>String(x).padStart(2,'0')).join(':');}
+renderTimer();
+setTimeout(timerToggle,600);
+
+// EXAM TIMER
+let examTimerOn=false,examTimerSecs=0,examTimerInt=null;
+function toggleExamTimer(){
+  if(examTimerOn){clearInterval(examTimerInt);examTimerOn=false;document.getElementById('examTimerDisp').style.display='none';}
+  else{examTimerOn=true;examTimerSecs=0;document.getElementById('examTimerDisp').style.display='';
+    examTimerInt=setInterval(()=>{examTimerSecs++;const m=Math.floor(examTimerSecs/60),sec=examTimerSecs%60;document.getElementById('examTimerDisp').textContent='⏱ '+String(m).padStart(2,'0')+':'+String(sec).padStart(2,'0');},1000);}
+}
+
+// ═══════════════════════════════════════════════════════════
+//  MÓDULO: XP / GAMIFICATION
+// ═══════════════════════════════════════════════════════════
+const LEVELS=['Aprendiz 🌱','Estudiante 📖','Avanzado 🔬','Experto 🧬','Maestro 🌟','Biólogo 🏆'];
+function addXP(n){S.stats.xp+=n;const lvl=Math.min(Math.floor(S.stats.xp/200),LEVELS.length-1);if(lvl>S.stats.level-1){S.stats.level=lvl+1;toast('🎉 ¡Nivel '+S.stats.level+'! '+LEVELS[lvl]);}saveState();renderXP();}
+function renderXP(){
+  const lvl=Math.min(S.stats.level-1,LEVELS.length-1);
+  const xpN=S.stats.level*200,xpP=(S.stats.level-1)*200;
+  const pct=Math.min(100,((S.stats.xp-xpP)/(xpN-xpP))*100);
+  document.getElementById('xpFill').style.width=pct+'%';
+  document.getElementById('xpLbl').innerHTML=S.stats.xp+'/'+xpN+' XP · <strong id="modeLbl">Modo: '+(S.settings.mode==='estudio'?'Estudio':'Examen')+'</strong>';
+  document.getElementById('levelBadge').textContent='Nivel '+S.stats.level+' · '+LEVELS[lvl];
+}
+
+// ═══════════════════════════════════════════════════════════
+//  MÓDULO: STATS (una sola fuente de verdad)
+// ═══════════════════════════════════════════════════════════
+function recordAnswer(ok,theme){
+  S.stats.total++;
+  if(ok){S.stats.hits++;S.stats.themeHits[theme]=(S.stats.themeHits[theme]||0)+1;addXP(10);}
+  else{S.stats.miss++;S.stats.themeMiss[theme]=(S.stats.themeMiss[theme]||0)+1;}
+  checkStreak();
+  // Activity log
+  S.stats.activity=S.stats.activity||[];
+  S.stats.activity.unshift({ts:Date.now(),ok,theme});
+  if(S.stats.activity.length>50)S.stats.activity.pop();
+  saveState();renderStats();checkAchievements();
+}
+function checkStreak(){const today=new Date().toDateString();if(S.stats.lastDate!==today){S.stats.streak++;S.stats.lastDate=today;}}
+function renderStats(){
+  const t=S.stats.total,h=S.stats.hits;
+  // Hero
+  document.getElementById('hTotal').textContent=t;
+  document.getElementById('hHits').textContent=h;
+  document.getElementById('hMiss').textContent=S.stats.miss;
+  document.getElementById('hStreak').textContent=S.stats.streak;
+  // Dashboard
+  document.getElementById('ds_pct').textContent=t?Math.round(h/t*100)+'%':'0%';
+  document.getElementById('ds_sims').textContent=S.stats.simsDone||0;
+  document.getElementById('ds_xp').textContent=S.stats.xp;
+  const mins=Math.floor((S.stats.timerSecs||0)/60);
+  document.getElementById('ds_time').textContent=mins+'m';
+  // Last session
+  if(S.stats.lastDate){document.getElementById('lastSession').textContent='Última sesión: '+S.stats.lastDate+' · Racha: '+S.stats.streak+' día(s)';}
+  renderThemeBars();renderRecos();renderWeakTopics();renderActivity();renderRank();renderDomainMap();
+}
+function renderThemeBars(){
+  const themes=[{k:'gen',l:'Genética (T4)'},{k:'evo',l:'Evolución (T5)'},{k:'ori',l:'Origen (T6)'}];
+  document.getElementById('themeBars').innerHTML=themes.map(t=>{
+    const h=S.stats.themeHits[t.k]||0,m=S.stats.themeMiss[t.k]||0,tot=h+m,pct=tot?Math.round(h/tot*100):0;
+    return`<div><div style="display:flex;justify-content:space-between;font-size:.82rem"><span>${t.l}</span><span>${pct}% (${h}/${tot})</span></div><div class="prog-bar" style="margin-top:.3rem"><div class="prog-fill${pct<40?' red':pct<60?' yellow':''}" style="width:${pct}%"></div></div></div>`;
+  }).join('');
+}
+function renderWeakTopics(){
+  const themes=[{k:'gen',l:'Genética'},{k:'evo',l:'Evolución'},{k:'ori',l:'Origen'}];
+  const weak=themes.filter(t=>{const h=S.stats.themeHits[t.k]||0,m=S.stats.themeMiss[t.k]||0,tot=h+m;return tot>0&&h/tot<0.6;});
+  document.getElementById('weakTopics').textContent=weak.length?'⚠ Débiles: '+weak.map(t=>t.l).join(', '):'✅ Sin temas débiles detectados.';
+}
+function renderActivity(){
+  const acts=S.stats.activity||[];
+  if(!acts.length){document.getElementById('activityFeed').textContent='Sin actividad registrada.';return;}
+  const labels={gen:'Genética',evo:'Evolución',ori:'Origen'};
+  document.getElementById('activityFeed').innerHTML=acts.slice(0,8).map(a=>`<div class="history-row"><span>${new Date(a.ts).toLocaleTimeString()}</span><span>${labels[a.theme]||'?'}</span><span>${a.ok?'<span style="color:var(--green)">✔</span>':'<span style="color:var(--red)">✘</span>'}</span></div>`).join('');
+}
+function renderRank(){
+  const hist=S.game?.history||[];
+  if(!hist.length){document.getElementById('rankPanel').innerHTML='<span class="muted" style="font-size:.82rem">Sin partidas aún.</span>';return;}
+  const top=hist.sort((a,b)=>b.score-a.score).slice(0,5);
+  document.getElementById('rankPanel').innerHTML=top.map((r,i)=>`<div class="rank-row"><span class="rank-medal">${['🥇','🥈','🥉','4️⃣','5️⃣'][i]}</span><span style="font-size:.82rem">${r.date} · ${r.mode}</span><strong>${r.score} pts</strong></div>`).join('');
+}
+function renderExamHistory(){
+  const h=S.stats.examAttempts||[];
+  if(!h.length){document.getElementById('examHistory').textContent='Sin intentos.';return;}
+  document.getElementById('examHistory').innerHTML=h.slice().reverse().map(a=>`<div class="history-row"><span>${a.date}</span><span>${a.mode}</span><strong>${a.score}/${a.total} (${(a.score/a.total*100).toFixed(0)}%)</strong></div>`).join('');
+}
+
+// ═══════════════════════════════════════════════════════════
+//  MÓDULO: RECOMMENDATIONS
+// ═══════════════════════════════════════════════════════════
+function renderRecos(){
+  const recs=[];
+  [{k:'gen',l:'Genética (T4)'},{k:'evo',l:'Evolución (T5)'},{k:'ori',l:'Origen (T6)'}].forEach(t=>{
+    const h=S.stats.themeHits[t.k]||0,m=S.stats.themeMiss[t.k]||0,tot=h+m;
+    if(!tot)recs.push({icon:'📖',txt:'Empieza a practicar: '+t.l,action:'#simulacros'});
+    else if(h/tot<0.4)recs.push({icon:'🔴',txt:'Urgente: refuerza '+t.l+' ('+Math.round(h/tot*100)+'% aciertos)',action:'#simulacros'});
+    else if(h/tot<0.6)recs.push({icon:'🟡',txt:'Sigue practicando: '+t.l+' ('+Math.round(h/tot*100)+'%)',action:'#simulacros'});
+    else recs.push({icon:'🟢',txt:'Buen dominio: '+t.l,action:'#resumen'});
+  });
+  if(S.stats.streak>=3)recs.push({icon:'🔥',txt:'Racha de '+S.stats.streak+' días. ¡Mantén el ritmo!',action:'#dashboard'});
+  if(S.stats.simsDone===0)recs.push({icon:'⚡',txt:'Haz tu primer simulacro para generar recomendaciones precisas.',action:'#simulacros'});
+  document.getElementById('recoPanel').innerHTML=recs.slice(0,5).map(r=>`<div class="reco-item">${r.icon} ${r.txt} <a class="reco-action" href="${r.action}">→ Ir</a></div>`).join('');
+}
+
+// ═══════════════════════════════════════════════════════════
+//  MÓDULO: TOPICS / SUBTOPICS (un solo sistema centralizado)
+// ═══════════════════════════════════════════════════════════
+const topicBadgeCls={Dominado:'badge-blue',Practicado:'badge-green',Estudiado:'badge-yellow','No visto':'badge-red'};
+function syncTopic(k,v){
+  S.progress.topics[k]=v;saveState();
+  document.querySelectorAll(`[data-topic="${k}"]`).forEach(el=>{if(el.tagName==='SELECT')el.value=v;});
+  const lbl=document.getElementById('lbl'+k[0].toUpperCase()+k.slice(1));
+  if(lbl){lbl.className='badge '+(topicBadgeCls[v]||'');lbl.textContent=v;}
+  renderDomainMap();
+}
+function saveST(k,v){S.progress.subtopics[k]=v;saveState();renderDomainMap();}
+function restoreTopics(){Object.keys(S.progress.topics).forEach(k=>syncTopic(k,S.progress.topics[k]));}
+function restoreSTs(){document.querySelectorAll('[data-st]').forEach(el=>{const k=el.dataset.st;if(S.progress.subtopics[k])el.value=S.progress.subtopics[k];});}
+
+// ═══════════════════════════════════════════════════════════
+//  MÓDULO: DOMAIN MAP (dinámico)
+// ═══════════════════════════════════════════════════════════
+const DOMAIN_TOPICS={
+  't4':['4.1','4.1.1','4.1.2','4.1.3','4.2','4.2.3','4.2.4','4.2.5','4.3','4.3.2','4.4','4.4.2','4.4.10','4.5','4.6','4.7'],
+  't5':['5.1','5.1.3','5.2','5.2.2','5.2.5','5.3'],
+  't6':['6.1','6.1.1','6.1.2','6.1.3']
+};
+let domainFilter='all';
+function filterDomain(f){domainFilter=f;renderDomainMap();}
+function computeMastery(k){
+  const v=S.progress.subtopics[k]||'No visto';
+  const lvl={'No visto':0,'Estudiado':1,'Practicado':2,'Dominado':3}[v]||0;
+  // también checar hits/misses del tema padre
+  return lvl;
+}
+function renderDomainMap(){
+  const wrap=document.getElementById('domainWrap');
+  const keys=Object.keys(DOMAIN_TOPICS).filter(t=>domainFilter==='all'||domainFilter===t).flatMap(t=>DOMAIN_TOPICS[t]);
+  if(!keys.length){wrap.innerHTML='<span class="muted" style="font-size:.85rem">Sin datos.</span>';return;}
+  wrap.innerHTML=keys.map(k=>{
+    const lvl=computeMastery(k);
+    const v=S.progress.subtopics[k]||'No visto';
+    return`<div class="dom-chip dom-${lvl}" title="${k}: ${v}" onclick="A.showDomainDetail('${k}')">${k}</div>`;
+  }).join('');
+}
+function showDomainDetail(k){
+  const v=S.progress.subtopics[k]||'No visto';
+  const lvlLabel={'0':'🔴 Débil (No visto)','1':'🟡 En progreso (Estudiado)','2':'🟢 Bueno (Practicado)','3':'🔵 Dominado'}[String(computeMastery(k))];
+  const det=document.getElementById('domainDetail');
+  det.style.display='block';
+  det.innerHTML=`<strong>${k}</strong> · ${v} · ${lvlLabel}<br><span class="muted">Haz clic en "Cobertura" para cambiar el estado.</span> <a class="reco-action" href="#cobertura">→ Ir a cobertura</a>`;
+}
+
+// ═══════════════════════════════════════════════════════════
+//  MÓDULO: FAVORITES
+// ═══════════════════════════════════════════════════════════
+function toggleFav(btn){
+  if(!S.favs)S.favs={};
+  const name=btn.dataset.fav;S.favs[name]=!S.favs[name];btn.classList.toggle('active',S.favs[name]);btn.textContent=(S.favs[name]?'★':'☆')+' Fav';
+  saveState();renderFavs();
+}
+function renderFavs(){
+  const favs=Object.entries(S.favs||{}).filter(([,v])=>v).map(([k])=>k);
+  document.getElementById('favList').innerHTML=favs.length?favs.map(f=>`<span class="badge badge-yellow">${f}</span>`).join(' '):'Sin favoritos.';
+}
+
+// ═══════════════════════════════════════════════════════════
+//  MÓDULO: ACHIEVEMENTS
+// ═══════════════════════════════════════════════════════════
+const ACHS=[
+  {id:'first',icon:'🥇',name:'Primera respuesta',cond:s=>s.total>=1},
+  {id:'ten',icon:'🔟',name:'10 preguntas',cond:s=>s.total>=10},
+  {id:'fifty',icon:'🎯',name:'50 preguntas',cond:s=>s.total>=50},
+  {id:'acc80',icon:'💯',name:'Precisión 80%',cond:s=>s.total>=5&&s.hits/s.total>=0.8},
+  {id:'str3',icon:'🔥',name:'Racha 3 días',cond:s=>s.streak>=3},
+  {id:'str7',icon:'🌟',name:'Racha 7 días',cond:s=>s.streak>=7},
+  {id:'flash5',icon:'🃏',name:'5 flashcards dominadas',cond:s=>s.flashDom>=5},
+  {id:'sim3',icon:'⚡',name:'3 simulacros',cond:s=>s.simsDone>=3},
+  {id:'lvl3',icon:'🏅',name:'Nivel 3',cond:s=>s.level>=3},
+  {id:'pomo3',icon:'🍅',name:'3 pomodoros',cond:s=>s.pomodoros>=3},
+  {id:'exam1',icon:'📝',name:'1er intento examen',cond:s=>s.examAttempts&&s.examAttempts.length>=1},
+  {id:'xp500',icon:'💎',name:'500 XP',cond:s=>s.xp>=500},
+];
+function checkAchievements(){let n=false;ACHS.forEach(a=>{if(!S.achievements[a.id]&&a.cond(S.stats)){S.achievements[a.id]=Date.now();n=true;toast('🏆 Logro: '+a.name);}});if(n){saveState();renderAchievements();}}
+function renderAchievements(){const g=document.getElementById('achGrid');g.innerHTML=ACHS.map(a=>`<div class="ach-item${S.achievements[a.id]?'':' locked'}"><div class="ach-icon">${a.icon}</div><div class="ach-name">${a.name}</div>${S.achievements[a.id]?'<div class="badge badge-green" style="margin-top:.3rem;font-size:.7rem">✔ Desbloqueado</div>':''}</div>`).join('');}
+
+// ═══════════════════════════════════════════════════════════
+//  MÓDULO: EXAMEN 2023 PARTE 1 (generada por JS, contenido íntegro)
+// ═══════════════════════════════════════════════════════════
+const E23Q=[
+  {q:'1. Los descendientes F1 del cruce: AA × aa son:',ops:['A) Todos AA','B) Todos aa','C) Todos Aa','D) ½ AA y ½ aa'],a:2,exp:'En un cruce entre homocigotos puros AA × aa, todos los descendientes F1 son heterocigotos Aa.',theme:'gen'},
+  {q:'2. El resultado del apareamiento de un hombre hemofílico con una mujer sana no portadora es (La hemofilia es debido a una mutación del cromosoma X):',ops:['A) Todos los hijos son portadores y todas las hijas normales','B) Todos los hijos son normales','C) La mitad de las hijas son portadoras y la otra mitad hemofílicas','D) La mitad de los hijos son hemofílicos y mitad de hijas normales','E) Todas las hijas son portadoras y todos los hijos son normales'],a:4,exp:'El hombre hemofílico (X^h Y) × mujer sana no portadora (X X) → hijas: todas X X^h (portadoras); hijos: todos X Y (normales).',theme:'gen'},
+  {q:'3. En la especie humana, el poder plegar la lengua se debe a un alelo dominante. Si los progenitores heterocigóticos tuvieran un hijo, ¿cuál sería la probabilidad de que tenga el fenotipo dominante?',ops:['A) Tres cuartos','B) Un cuarto','C) Dos entre cuatro','D) Uno sobre sesenta y cuatro'],a:0,exp:'Cruce Aa × Aa: 3/4 = 75% tienen fenotipo dominante (AA + Aa). Tres cuartos.',theme:'gen'},
+  {q:'4. Nuestros grupos sanguíneos A, B y O están regidos por tres alelos. ¿Cuántos genotipos distintos existen?',ops:['A) 6','B) 3','C) 4','D) 10','E) 5'],a:0,exp:'Con 3 alelos: IA IA, IA i, IB IB, IB i, IA IB, i i = 6 genotipos.',theme:'gen'},
+  {q:'5. El contenido de genes de un individuo se denomina:',ops:['A) Idiotipo','B) Fenotipo','C) Topotipo','D) Genotipo'],a:3,exp:'Genotipo = conjunto de alelos/genes de un individuo. Fenotipo = expresión observable.',theme:'gen'},
+  {q:'6. ¿Qué es exactamente un locus?',ops:['A) Lo que se conoce como alelo','B) Conjunto de alelos de una vía metabólica','C) Lugar determinado de un cromosoma donde se localiza un gen','D) Sitio de un cromosoma en el núcleo'],a:2,exp:'Locus = posición específica y fija de un gen en un cromosoma particular.',theme:'gen'},
+  {q:'7. El albinismo se debe a un alelo autosómico recesivo (a). Dos progenitores normales tienen un hijo albino. ¿Probabilidad del siguiente hijo albino?',ops:['A) 2/4','B) 3/4','C) 1/4','D) 1/2'],a:2,exp:'Si dos progenitores normales tienen un hijo albino (aa), ambos son Aa. Cruce Aa × Aa → 1/4 de probabilidad de aa.',theme:'gen'},
+  {q:'8. El árbol genealógico muestra un carácter poco frecuente (sombreados) solo en varones. Se trata de:',ops:['A) Gen recesivo ligado al sexo','B) Gen dominante ligado al sexo','C) Gen autosómico dominante que solo se expresa en varones','D) Gen autosómico recesivo que solo se expresa en mujeres'],a:2,exp:'Si el carácter es poco frecuente y aparece solo en varones con patrón autosómico (padres a hijos), corresponde a un gen autosómico dominante que solo se expresa en varones.',theme:'gen'},
+  {q:'9. Una mujer de ojos castaños cuyo padre tenía ojos azules se casa con un hombre de ojos azules. ¿Colores posibles de sus hijos?',ops:['A) 25% azules y 75% castaños','B) 25% castaños y 75% azules','C) 50% azules y 50% castaños','D) 100% azules'],a:2,exp:'La mujer es Bb (su padre tenía ojos azules = bb). Cruce Bb × bb → 50% Bb (castaños) y 50% bb (azules).',theme:'gen'},
+  {q:'10. La constitución cromosómica en el síndrome de Klinefelter es:',ops:['A) XXY','B) XXYY','C) X0','D) OY'],a:0,exp:'Síndrome de Klinefelter: 47,XXY. Resultado de no-disyunción durante la gametogénesis.',theme:'gen'},
+  {q:'11. En humanos, las trisomías autosómicas más frecuentes son los síndromes de:',ops:['A) Turner y Klinefelter','B) Edwards, Patau y Down','C) Klinefelter y Down','D) Turner y Down'],a:1,exp:'Trisomías autosómicas: Down (21), Edwards (18), Patau (13). Turner y Klinefelter son de cromosomas sexuales.',theme:'gen'},
+  {q:'12. Las características distintivas del dominio Eucarya son:',ops:['A) Presenta pared de peptidoglicanos','B) Son metanogénicos','C) El ribosoma es de 70S y cromosoma circular','D) Presentan orgánulos membranosos'],a:3,exp:'Eukarya: orgánulos membranosos (núcleo, mitocondrias), ribosomas 80S, cromosomas lineales. No tienen peptidoglicano.',theme:'ori'},
+  {q:'13. ______ es la fuente original de nuevos alelos.',ops:['A) La mutación','B) La selección natural','C) La deriva génica','D) El flujo génico'],a:0,exp:'La mutación es el único mecanismo que crea nuevos alelos. Los demás solo distribuyen o eliminan los ya existentes.',theme:'evo'},
+  {q:'14. La selección sexual, como la competencia entre machos por hembras fértiles, con frecuencia conduce a:',ops:['A) Agresión','B) Monomorfismo','C) Dimorfismo sexual','D) Depredación'],a:2,exp:'La selección sexual favorece rasgos que aumentan el éxito reproductivo → dimorfismo sexual (diferencia entre sexos).',theme:'evo'},
+  {q:'15. El experimento de Miller y Urey demostró:',ops:['A) La gran antigüedad de la Tierra','B) Que los aminoácidos pueden ensamblarse espontáneamente','C) Que el oxígeno es necesario para la vida','D) Que el ARN fue la primera molécula autorreplicativa'],a:1,exp:'Miller y Urey (1953) simularon condiciones primitivas y sintetizaron aminoácidos sin vida previa → origen abiótico posible.',theme:'ori'},
+  {q:'16. Las partículas de arcilla con carga negativa desempeñaron un papel en:',ops:['A) La formación temprana de proteínas','B) La replicación temprana de ADN','C) La fotosíntesis temprana','D) La declinación temprana de oxígeno'],a:0,exp:'La arcilla puede concentrar y organizar aminoácidos, facilitando la formación de polipéptidos primitivos.',theme:'ori'},
+  {q:'17. De acuerdo a las evidencias, la vida comenzó con células semejantes a:',ops:['A) Procariotas autótrofos','B) Procariotas heterótrofos aerobios','C) Procariotas heterótrofos anaerobios','D) Procariotas autótrofas aerobios'],a:2,exp:'Las primeras células eran procariotas, vivían en atmósfera sin O₂ (anaerobias) y obtenían energía de moléculas orgánicas del medio (heterótrofas).',theme:'ori'},
+  {q:'18. Bacterias como Bacillus anthracis sobreviven condiciones duras formando:',ops:['A) Un pilus','B) Un heterocisto','C) Una endóspora','D) Un plásmido'],a:2,exp:'Endósporas: estructuras de resistencia bacteriana altamente resistentes al calor, desecación y radiación.',theme:'ori'},
+  {q:'19. ¿De qué manera difieren las bacterias gramnegativas de las grampositivas?',ops:['A) No son patógenas','B) Su pared celular de peptidoglicano es más delgada','C) Las gramnegativas no pueden teñirse con tinción de Gram','D) Las gramnegativas no realizan fotosíntesis'],a:1,exp:'Gramnegativas: peptidoglicano delgado + membrana externa con lipopolisacáridos → retienen poco colorante → aparecen rosadas.',theme:'ori'},
+  {q:'20. Las bacterias que introdujeron oxígeno por primera vez a la atmósfera mediante la fotosíntesis fueron:',ops:['A) Metanógenas','B) Patógenas','C) Líquenes','D) Cianobacterias'],a:3,exp:'Las cianobacterias realizaron fotosíntesis oxigénica y liberaron O₂ a la atmósfera primitiva (~2.4 mil millones de años).',theme:'ori'},
+  {q:'21. ¿A través de qué proceso las células eucarióticas obtuvieron cloroplastos y mitocondrias?',ops:['A) Exocitosis','B) Endosimbiosis','C) Endocitosis','D) Transformación'],a:1,exp:'Teoría endosimbiótica (Lynn Margulis): procariotas fueron engullidos por células eucariotas ancestrales y se convirtieron en orgánulos.',theme:'ori'},
+  {q:'22. ¿Cuál de los siguientes es un alga verde?',ops:['A) Volvox','B) Euglena','C) Paramecium','D) Plasmodium'],a:0,exp:'Volvox es un alga verde colonial (Chlorophyta). Euglena es euglenozoo. Paramecium es ciliado. Plasmodium es apicomplejo.',theme:'ori'},
+  {q:'23. ¿De cuál fenómeno son responsables los dinoflagelados?',ops:['A) Tierra de diatomeas','B) Enfermedad de Chagas','C) Marea roja','D) Formación del ozono'],a:2,exp:'Los dinoflagelados (ej. Karenia brevis) pueden proliferar masivamente y liberar toxinas → marea roja.',theme:'ori'},
+  {q:'24. Los organismos que viven en ausencia de oxígeno se denominan:',ops:['A) Autótrofos','B) Heterótrofos','C) Anaerobios','D) Aerobios'],a:2,exp:'Anaerobios: organismos que no requieren O₂ para sobrevivir. Algunos son aerobios facultativos.',theme:'ori'},
+  {q:'25. El trastorno que impide distinguir ciertos colores se denomina:',ops:['A) Hemofilia','B) Síndrome de Turner','C) Síndrome de Down','D) Daltonismo'],a:3,exp:'Daltonismo (discromatopsia): dificultad para distinguir colores, especialmente rojo y verde. Gen recesivo ligado al X.',theme:'gen'},
+  {q:'26. Un científico que aportó ideas a las teorías de la evolución fue:',ops:['A) Mendel','B) Wallace','C) Lamarck','D) Linneo'],a:1,exp:'Alfred Russel Wallace propuso la selección natural de forma independiente a Darwin y ambos publicaron conjuntamente en 1858.',theme:'evo'},
+  {q:'27. La forma correcta de escribir el nombre científico de la guaria morada es:',ops:['A) guarianthe Skinneri','B) guarianthe skinneri','C) Guarianthe Skinneri','D) Guarianthe skinneri'],a:3,exp:'Nomenclatura binomial: Género con mayúscula inicial + especie en minúscula, ambos en cursiva o subrayados.',theme:'ori'},
+  {q:'28. El principio de Mendel de dominancia y recesividad se refiere a:',ops:['A) Dos factores distintos en un organismo: uno domina sobre el otro','B) Dos alelos de un progenitor se separan al azar en gametos','C) Se cruza fenotipo dominante con homocigoto recesivo','D) Dos genes en el mismo cromosoma'],a:0,exp:'Principio de dominancia: cuando hay dos factores (alelos) distintos, uno (dominante) enmascara al otro (recesivo).',theme:'gen'},
+  {q:'29. La codominancia se refiere a:',ops:['A) El heterocigota expresa simultáneamente el fenotipo de ambos progenitores','B) Proporción de individuos con genotipo que expresan cierto fenotipo','C) Varios genes modifican una característica','D) Un gen con más de dos alelos en la población'],a:0,exp:'Codominancia: ambos alelos se expresan simultáneamente en el heterocigoto (ej. tipo AB del sistema ABO).',theme:'gen'},
+  {q:'30. El término de evolución convergente se refiere a:',ops:['A) Un gen con más de dos alelos','B) Desarrollo de estructuras similares de ancestros distintos','C) Organismos diferentes de animales relacionados','D) Grupo que no puede cruzarse y dejar descendencia fértil'],a:1,exp:'Evolución convergente: linajes no relacionados desarrollan características similares por presiones selectivas parecidas.',theme:'evo'},
+  {q:'31. Los órganos análogos son:',ops:['A) Los que realizan misma función aunque su origen sea diferente','B) Los que tienen la misma estructura interna','C) Los que realizan funciones diferentes','D) Como las alas de pájaros y los brazos de un hombre'],a:0,exp:'Análogos: misma función, origen evolutivo distinto. Homólogos: mismo origen, función puede diferir.',theme:'evo'},
+  {q:'32. Al ordenar de menor a mayor complejidad los tres dominios:',ops:['A) Archaea/Bacteria/Eukarya','B) Bacteria/Archaea/Eukarya','C) Bacteria/Eukarya/Archaea','D) Eukarya/Archaea/Bacteria'],a:1,exp:'Bacteria y Archaea son procariotas (similares en complejidad básica); Eukarya son más complejas (orgánulos, núcleo).',theme:'ori'},
+  {q:'33. Plantas pequeñas, sin vasos, sin semillas, sin flores ni frutos, dependen del agua para reproducirse (ej. hepáticas y musgos):',ops:['A) Glaucofitas','B) Briofitas','C) Pteridofitas','D) Gimnospermas'],a:1,exp:'Briofitas (musgos, hepáticas, antoceros): las plantas terrestres más primitivas; sin sistema vascular.',theme:'ori'},
+  {q:'34. Los helechos y licopodios son ejemplos de:',ops:['A) Plantas vasculares con semillas','B) Briofitas','C) Plantas vasculares sin semillas','D) Gimnospermas'],a:2,exp:'Pteridofitas (helechos, licopodios, equisetos): plantas vasculares sin semilla; se reproducen por esporas.',theme:'ori'},
+  {q:'35. Plantas vasculares con troncos leñosos, hojas aciculadas y semillas en conos, sin flores ni frutos (ej. coníferas y ginkgos):',ops:['A) Briofitas','B) Pteridofitas','C) Gimnospermas','D) Angiospermas'],a:2,exp:'Gimnospermas: semillas desnudas (no en fruto), conos, hojas aciculadas; plenamente adaptadas al medio terrestre.',theme:'ori'},
+  {q:'36. ¿Cuál de las siguientes es una característica de los quitridiomicetos?',ops:['A) Tienen esporas flageladas','B) Pueden vivir en tierra muy seca','C) Son simbiontes con raíces de plantas','D) Sí tienen septos'],a:0,exp:'Quitridiomicetos: únicos hongos con esporas móviles flageladas (zoósporas); viven en medios acuáticos.',theme:'ori'},
+  {q:'37. Las micorrizas:',ops:['A) Son un tipo de liquen','B) Ayudan a las plantas a reunir energía solar','C) Ayudan a las plantas a reunir nutrientes inorgánicos','D) Son asociaciones de basidiomicetos'],a:2,exp:'Micorrizas: simbiosis raíz-hongo; el hongo aumenta la superficie de absorción de agua y minerales para la planta.',theme:'ori'},
+  {q:'38. Una combinación de organismos que consiste en un fotoautótrofo y un hongo se llama:',ops:['A) Endomicorriza','B) Ectomicorriza','C) Liquen','D) Agente patógeno'],a:2,exp:'Liquen = simbiosis entre un hongo heterótrofo y un fotoautótrofo (alga o cianobacteria). Altamente resistentes.',theme:'ori'},
+  {q:'39. El campo de la biología que estudia la biodiversidad de la Tierra como producto de millones de años de evolución:',ops:['A) Sistemática','B) Taxonomía','C) Geología','D) Ecología'],a:0,exp:'Sistemática: estudio de la diversidad biológica y las relaciones evolutivas. La taxonomía es solo la clasificación.',theme:'ori'},
+  {q:'40. Una célula escrita como n + n es:',ops:['A) Monocarióta','B) Diploide','C) Cenocítica','D) Dicarióta'],a:3,exp:'n + n = dicarióta: dos núcleos haploides en una misma célula, sin fusión. Común en hongos (Ascomycota, Basidiomycota).',theme:'ori'},
+];
+function buildExam(){
+  const c=document.getElementById('exam2023Parts');
+  c.innerHTML=E23Q.map((q,i)=>`
+    <div class="sim-question" data-q="${i}" data-theme="${q.theme}" data-search-section="examen">
+      <strong>${q.q}</strong>
+      <div class="mcq">${q.ops.map((o,j)=>`<label class="option"><input type="radio" name="e23_${i}" value="${j}"><span>${o}</span></label>`).join('')}</div>
+      <div class="feedback" id="fb23_${i}"></div>
+    </div>`).join('');
+}
+
+const E23_M1_ANS=['4','8','9','3','1','10','6','2','7','5'];
+const E23_M1_EXP=['Anélida → Lombriz de tierra (Annelida)','Seudocelomados → Nematodos','Aves → Extremidades anteriores modificadas para volar','Cestodos/planarias → Platyhelminthes','Notocordio/cordón nervioso → Chordata','Mollusca → Gastrópodo, bivalvo, pulpo','Sistema vascular acuífero → Echinodermata','Lepidóptero/Díptero → Arthropoda','Sin tejido → Porífera','Simetría radial → Cnidaria'];
+const E23_M2_ANS=['5','8','10','7','1','3','9','6','4','2'];
+const E23_M2_EXP=['Mutaciones → Causa original de variación genética','Consanguinidad → Genes recesivos ocultos en heterocigosis','Herencia adquirida → Lamarck','Poliploidía → Más de dos copias de cromosomas (tetraploide)','Funda colonias aisladas → Efecto fundador','Microevolución → Evolución a pequeña escala','Darwin/Wallace → Selección natural','Macroevolución → Transformaciones globales (origen de mamíferos)','Tierra centro del universo → Creacionismo','Migración → Aumenta flujo génico y diversidad'];
+const E23_SHORT_DATA=[
+  {ans:['virus'],exp:'Virus: agente infeccioso acelular con ácido nucleico rodeado de cápside proteica.'},
+  {ans:['viroide','viroid'],exp:'Viroide: ARN monocatenario y circular, sin cápside, sin proteínas ni lípidos.'},
+  {ans:['prion','priones','prión'],exp:'Priones: partículas proteicas infecciosas que inducen misfolding de proteínas normales.'},
+  {ans:['bacteriofago','bacteriófago','fago'],exp:'Bacteriófago (fago): virus que infecta específicamente a bacterias.'},
+  {ans:['liquen','líquen'],exp:'Liquen: asociación simbiótica mutualista entre un hongo y un fotoautótrofo (alga o cianobacteria).'},
+  {ans:['micorriza','micorrizas'],exp:'Micorriza: simbiosis simbiótica entre raíces de plantas y hongos; mejoran absorción de nutrientes.'},
+  {ans:['dicotiledoneas','dicotiledóneas','dicotiledonea','dicotiledónea'],exp:'Dicotiledóneas: plantas con estructuras en múltiplos de 4 o 5, raíz pivotante y nervaduras ramificadas.'},
+  {ans:['coevolucion','coevolución'],exp:'Coevolución: proceso por el que dos o más especies se influyen mutuamente en su evolución.'},
+  {ans:['acelomado','acoelomado'],exp:'Acelomado: organismo sin cavidad corporal (celoma). Ej. planarias, tenias.'},
+  {ans:['convergente'],exp:'Evolución convergente: desarrollo de estructuras similares en linajes no relacionados por presiones selectivas similares.'},
+];
+const E23_MANUAL_EXP=[
+  'Color de piel y estatura son dos caracteres humanos con herencia poligénica (influidos por múltiples genes).',
+  'Archaea: lípidos con enlaces éter, histonas (similares a eucariotas), sin peptidoglicano clásico. Bacteria: lípidos con enlaces éster, sin histonas, peptidoglicano en pared.',
+  'Fósiles, anatomía comparada (órganos homólogos/vestigiales), embriología comparada, biogeografía, biología molecular/genética.',
+  'Radiación (UV, rayos X, gamma) y sustancias químicas mutagénicas (ej. benceno, mostaza nitrogenada).',
+  'Producción de agar (para cultivos microbiológicos e industria alimentaria).',
+];
+
+// ─── REVIEW PART 1 ─────────────────────────────
+function reviewP1(){
+  let earned=0;const showFb=S.settings.mode==='estudio';
+  E23Q.forEach((q,i)=>{
+    const sel=document.querySelector(`input[name="e23_${i}"]:checked`);
+    const fb=document.getElementById('fb23_'+i);
+    if(!sel){fb.className='feedback show bad';fb.textContent='⚠ Sin respuesta. Correcta: '+q.ops[q.a]+' — '+q.exp;}
+    else if(parseInt(sel.value)===q.a){earned++;fb.className='feedback show good';fb.textContent='✔ Correcto. '+q.exp;}
+    else{fb.className='feedback show bad';fb.textContent='✘ Incorrecta. Correcta: '+q.ops[q.a]+' — '+q.exp;}
+    if(!showFb)fb.style.display='none';else fb.style.display='block';
+  });
+  if(!showFb)document.querySelectorAll('[id^="fb23_"]').forEach(fb=>fb.style.display='block');
+  saveSec('p1summary',earned,40);
+  const s=document.getElementById('p1summary');s.style.display='block';
+  s.innerHTML=`<strong>Parte 1: ${earned}/40 pts (${(earned/40*100).toFixed(1)}%)</strong>`;
+  S.stats.examAttempts=S.stats.examAttempts||[];
+  S.stats.examAttempts.push({date:new Date().toLocaleDateString(),score:earned,total:40,mode:S.settings.mode,ts:Date.now()});
+  if(S.stats.examAttempts.length>15)S.stats.examAttempts.shift();
+  addXP(earned*2);saveState();renderStats();renderExamHistory();checkAchievements();
+  toast('Parte 1 revisada: '+earned+'/40');
+}
+function resetP1(){document.querySelectorAll('[name^="e23_"]').forEach(i=>i.checked=false);document.querySelectorAll('[id^="fb23_"]').forEach(fb=>{fb.className='feedback';fb.textContent='';fb.style.display='';});const s=document.getElementById('p1summary');s.style.display='none';delete s.dataset.r;}
+
+// ─── REVIEW PART 2 ─────────────────────────────
+function reviewP2(){
+  let earned=0;
+  E23_SHORT_DATA.forEach((d,i)=>{
+    const ta=document.getElementById('s'+i);const fb=document.getElementById('fs'+i);
+    const val=norm(ta.value);const ok=d.ans.some(a=>val===norm(a)||val.includes(norm(a)));
+    if(!val){fb.className='feedback show bad';fb.textContent='⚠ Sin respuesta. Esperado: '+d.ans[0]+'. '+d.exp;}
+    else if(ok){earned+=2;fb.className='feedback show good';fb.textContent='✔ Correcto (2 pts). '+d.exp;}
+    else{fb.className='feedback show bad';fb.textContent='✘ Incorrecto. Correcto: '+d.ans[0]+'. '+d.exp;}
+  });
+  saveSec('p2summary',earned,20);
+  const s=document.getElementById('p2summary');s.style.display='block';
+  s.innerHTML=`<strong>Parte 2: ${earned}/20 pts (${(earned/20*100).toFixed(1)}%)</strong>`;
+  toast('Parte 2 revisada: '+earned+'/20');
+}
+function resetP2(){for(let i=0;i<10;i++){const ta=document.getElementById('s'+i);if(ta)ta.value='';const fb=document.getElementById('fs'+i);if(fb){fb.className='feedback';fb.textContent='';}}const s=document.getElementById('p2summary');s.style.display='none';delete s.dataset.r;}
+
+// ─── REVIEW MANUAL ─────────────────────────────
+function reviewManual(){
+  E23_MANUAL_EXP.forEach((exp,i)=>{const fb=document.getElementById('fm'+i);fb.style.display='block';fb.className='feedback show good';fb.innerHTML='<strong>✅ Respuesta esperada:</strong> '+exp;});
+  const s=document.getElementById('pmansummary');s.style.display='block';s.innerHTML='<strong>Preguntas abiertas:</strong> Verifica tus respuestas con las esperadas arriba.';
+  toast('Respuestas esperadas mostradas.');
+}
+function resetManual(){for(let i=0;i<5;i++){const ta=document.getElementById('m'+i);if(ta)ta.value='';const fb=document.getElementById('fm'+i);if(fb){fb.style.display='none';fb.textContent='';}}const s=document.getElementById('pmansummary');s.style.display='none';}
+
+// ─── REVIEW A1 ─────────────────────────────────
+function reviewA1(){
+  let earned=0;
+  E23_M1_ANS.forEach((ans,i)=>{
+    const inp=document.getElementById('a1_'+i);const fb=document.getElementById('fa1_'+i);
+    const val=inp.value.trim();
+    if(!val){fb.style.cssText='color:#92400e;font-size:.78rem';fb.textContent=' ⚠';}
+    else if(val===ans){earned++;fb.style.cssText='color:#166534;font-size:.78rem';fb.textContent=' ✔';}
+    else{fb.style.cssText='color:#991b1b;font-size:.78rem';fb.textContent=' ✘('+ans+') '+E23_M1_EXP[i];}
+  });
+  saveSec('pa1summary',earned,10);
+  const s=document.getElementById('pa1summary');s.style.display='block';s.innerHTML=`<strong>Asociación 1: ${earned}/10 pts</strong><br><small>${E23_M1_EXP.map((e,i)=>i+'. '+e).join(' | ')}</small>`;
+  toast('Asociación 1 revisada: '+earned+'/10');
+}
+function resetA1(){for(let i=0;i<10;i++){const el=document.getElementById('a1_'+i);if(el)el.value='';const fb=document.getElementById('fa1_'+i);if(fb){fb.style.cssText='';fb.textContent='';}}const s=document.getElementById('pa1summary');s.style.display='none';}
+
+// ─── REVIEW A2 ─────────────────────────────────
+function reviewA2(){
+  let earned=0;
+  E23_M2_ANS.forEach((ans,i)=>{
+    const inp=document.getElementById('a2_'+i);const fb=document.getElementById('fa2_'+i);
+    const val=inp.value.trim();
+    if(!val){fb.style.cssText='color:#92400e;font-size:.78rem';fb.textContent=' ⚠';}
+    else if(val===ans){earned++;fb.style.cssText='color:#166534;font-size:.78rem';fb.textContent=' ✔';}
+    else{fb.style.cssText='color:#991b1b;font-size:.78rem';fb.textContent=' ✘('+ans+') '+E23_M2_EXP[i];}
+  });
+  saveSec('pa2summary',earned,10);
+  const s=document.getElementById('pa2summary');s.style.display='block';s.innerHTML=`<strong>Asociación 2: ${earned}/10 pts</strong><br><small>${E23_M2_EXP.map((e,i)=>i+'. '+e).join(' | ')}</small>`;
+  toast('Asociación 2 revisada: '+earned+'/10');
+}
+function resetA2(){for(let i=0;i<10;i++){const el=document.getElementById('a2_'+i);if(el)el.value='';const fb=document.getElementById('fa2_'+i);if(fb){fb.style.cssText='';fb.textContent='';}}const s=document.getElementById('pa2summary');s.style.display='none';}
+
+// ─── DESARROLLO 1 ──────────────────────────────
+const HW_VALID=['0.42','42%','0,42','42 %'];
+function reviewDev1(){
+  let earned=0;
+  const inp=document.getElementById('hw_ans');const fb=document.getElementById('fb_hw_a');
+  const val=norm(inp.value);
+  if(HW_VALID.map(norm).some(a=>val.includes(a)||val===a)){earned+=3;fb.className='feedback show good';fb.textContent='✔ Correcto (3 pts). 2pq = 2(0.7)(0.3) = 0.42';}
+  else if(!val){fb.className='feedback show bad';fb.textContent='⚠ Sin respuesta. Correcto: 0.42 — Fórmula: 2pq = 2(1-0.3)(0.3)';}
+  else{fb.className='feedback show bad';fb.textContent='✘ Incorrecto. Correcto: 0.42 — Fórmula: 2pq = 2(0.7)(0.3) = 0.42';}
+  const fbb=document.getElementById('fb_hw_b');fbb.style.display='block';fbb.className='feedback show good';
+  fbb.innerHTML='<strong>Respuesta esperada 1b (4 pts):</strong> Las 5 condiciones del equilibrio H-W son: 1) Sin mutaciones. 2) Sin selección natural. 3) Tamaño poblacional grande (infinito teórico). 4) Apareamiento al azar (panmixia). 5) Sin flujo génico (sin migración). <em>1 pto por condición correcta, máximo 4.</em>';
+  saveSec('pdev1sum',earned,3);
+  const s=document.getElementById('pdev1sum');s.style.display='block';s.innerHTML=`<strong>Desarrollo 1: ${earned}/3 pts automáticos + revisión manual de 1b (4 pts)</strong>`;
+}
+function resetDev1(){const a=document.getElementById('hw_ans');if(a)a.value='';const b=document.getElementById('hw_cond');if(b)b.value='';document.getElementById('fb_hw_a').className='feedback';document.getElementById('fb_hw_a').textContent='';document.getElementById('fb_hw_b').style.display='none';const s=document.getElementById('pdev1sum');s.style.display='none';}
+
+function reviewDev2(){const fb=document.getElementById('fb_dev2');fb.style.display='block';fb.className='feedback show good';fb.innerHTML='<strong>✅ Respuesta esperada:</strong><br><b>A</b> = Selección estabilizadora: favorece el fenotipo promedio; reduce variación.<br><b>B</b> = Selección direccional: favorece un extremo del fenotipo; desplaza la media hacia ese lado.<br><b>C</b> = Selección disruptiva: favorece ambos extremos; aumenta variación y puede llevar a especiación.';}
+function resetDev2(){['dev2_a','dev2_b','dev2_c'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});const fb=document.getElementById('fb_dev2');fb.style.display='none';fb.textContent='';}
+
+function reviewDev3(){const fb=document.getElementById('fb_dev3');fb.style.display='block';fb.className='feedback show good';fb.innerHTML='<strong>✅ Respuesta esperada:</strong> Diagrama: hifa → esporangio con esporas. Las esporas asexuales se producen por <b>mitosis</b> (reproducción asexual clonal). En la reproducción sexual, las esporas se forman por meiosis. El micelio es el conjunto de hifas del hongo.';}
+function resetDev3(){const ta=document.getElementById('dev3_note');if(ta)ta.value='';const fb=document.getElementById('fb_dev3');fb.style.display='none';fb.textContent='';}
+
+// ─── GLOBAL CALC ───────────────────────────────
+function calcGlobal(){
+  const secs=[{id:'p1summary',l:'Parte 1',max:40},{id:'p2summary',l:'Parte 2',max:20},{id:'pa1summary',l:'Asoc 1',max:10},{id:'pa2summary',l:'Asoc 2',max:10},{id:'pdev1sum',l:'Desarrollo 1a',max:3}];
+  let tE=0,tP=0,lines=['<strong>📊 Diagnóstico por sección:</strong>',''];
+  secs.forEach(s=>{const el=document.getElementById(s.id);if(el&&el.dataset.r==='1'){const e=parseFloat(el.dataset.e||0),p=parseFloat(el.dataset.p||0);tE+=e;tP+=p;lines.push('✔ '+s.l+': '+e+'/'+p+' pts');}else lines.push('○ '+s.l+': no revisada aún');});
+  lines.push('','<strong>TOTAL: '+tE+'/'+tP+' pts = '+(tP>0?(tE/tP*100).toFixed(2):0)+'%</strong>');
+  document.getElementById('globalDiag').style.display='block';document.getElementById('globalDiag').innerHTML=lines.join('<br>');
+  document.getElementById('glob_earned').textContent=tE;document.getElementById('glob_possible').textContent=tP;
+  document.getElementById('glob_pct').textContent=tP?(tE/tP*100).toFixed(2)+'%':'—';
+}
+
+// ═══════════════════════════════════════════════════════════
+//  MÓDULO: SIMULACROS ADAPTATIVOS
+// ═══════════════════════════════════════════════════════════
+const QB=[
+  {t:'gen',d:0,q:'¿En qué fase del ciclo celular se duplica el ADN?',ops:['G1','S (síntesis)','G2','Fase M'],a:1,exp:'La fase S (síntesis) es cuando ocurre la replicación semiconservativa del ADN.'},
+  {t:'gen',d:0,q:'¿Qué se separa en la Meiosis I?',ops:['Cromátidas hermanas','Cromosomas homólogos','Centrosomas','Nucleosomas'],a:1,exp:'En Meiosis I se separan los pares de cromosomas homólogos. Las cromátidas hermanas se separan en Meiosis II.'},
+  {t:'gen',d:1,q:'¿Cuál enzima sintetiza ADN durante la replicación?',ops:['Helicasa','Ligasa','ADN polimerasa III','Primasa'],a:2,exp:'ADN polimerasa III: sintetiza la nueva cadena. Helicasa: abre hélice. Primasa: pone cebador. Ligasa: une fragmentos de Okazaki.'},
+  {t:'gen',d:1,q:'El sistema ABO es ejemplo de:',ops:['Dominancia incompleta','Codominancia y alelos múltiples','Ligamiento','Pleiotropía'],a:1,exp:'ABO: 3 alelos (IA, IB, i) y IA/IB son codominantes → tipo AB expresa ambos antígenos.'},
+  {t:'gen',d:2,q:'Constitución cromosómica del síndrome de Klinefelter:',ops:['XO','XXY','XYY','XXX'],a:1,exp:'47,XXY: no-disyunción de XX en madre o XY en padre produce este cariotipo.'},
+  {t:'gen',d:2,q:'Si q=0.3 en H-W, ¿frecuencia de heterocigotos?',ops:['0.42','0.09','0.49','0.21'],a:0,exp:'2pq = 2(0.7)(0.3) = 0.42. Recuerda: p+q=1, entonces p=0.7.'},
+  {t:'gen',d:0,q:'¿Qué es el locus?',ops:['Un alelo recesivo','Posición de un gen en un cromosoma','Un tipo de ARN','El genotipo completo'],a:1,exp:'Locus = posición específica de un gen en un cromosoma. Los alelos de un gen están en el mismo locus de cromosomas homólogos.'},
+  {t:'gen',d:1,q:'¿Qué fase sigue a G2 en el ciclo eucariota?',ops:['G1','S','Interfase completa','Fase M (mitosis o meiosis)'],a:3,exp:'Después de G2 inicia la fase M. La secuencia es G1 → S → G2 → M.'},
+  {t:'gen',d:0,q:'Diferencia entre cromátidas hermanas y cromosomas homólogos:',ops:['Son lo mismo','Hermanas: copias idénticas. Homólogos: mismo gen, distintos alelos posibles.','Homólogos: copias idénticas. Hermanas: distintos alelos.','Ninguna diferencia funcional'],a:1,exp:'Cromátidas hermanas son copias idénticas del mismo cromosoma unidas por centrómero. Homólogos son el par de cromosomas (uno materno, uno paterno) con mismos genes pero posibles distintos alelos.'},
+  {t:'gen',d:1,q:'En un cruce Aa × Aa, ¿qué proporción fenotípica se espera?',ops:['1:2:1','3:1','1:1','100% dominante'],a:1,exp:'Cruce Aa × Aa → 1/4 AA, 2/4 Aa, 1/4 aa → proporción fenotípica 3 dominante : 1 recesivo.'},
+  {t:'evo',d:0,q:'¿Cuál es la fuente original de nuevos alelos?',ops:['Selección natural','Mutación','Deriva genética','Flujo génico'],a:1,exp:'La mutación crea nuevos alelos. Los otros mecanismos solo redistribuyen o eliminan los ya existentes.'},
+  {t:'evo',d:1,q:'Selección que favorece los extremos de distribución fenotípica:',ops:['Estabilizadora','Direccional','Disruptiva','Sexual'],a:2,exp:'Selección disruptiva: favorece fenotipo extremo → puede llevar a especiación.'},
+  {t:'evo',d:0,q:'¿Qué tipo de especiación ocurre por separación geográfica?',ops:['Simpátrica','Alopátrica','Parapátrica','Sexual'],a:1,exp:'Alopátrica: barrera geográfica separa poblaciones → divergen evolutivamente.'},
+  {t:'evo',d:1,q:'Los órganos análogos:',ops:['Tienen el mismo origen evolutivo','Misma función, origen evolutivo distinto','Son vestigiales','Son homólogos'],a:1,exp:'Análogos: misma función, origen distinto (ej. ala de insecto y ala de ave). NO indican parentesco cercano.'},
+  {t:'evo',d:0,q:'Darwin y Wallace propusieron:',ops:['Herencia de caracteres adquiridos','Selección natural','Creacionismo','Teoría sintética'],a:1,exp:'Darwin y Wallace propusieron independientemente la selección natural como mecanismo evolutivo (publicado en 1858).'},
+  {t:'evo',d:2,q:'p²+2pq+q²=1 expresa:',ops:['Frecuencias alélicas','Frecuencias genotípicas en equilibrio H-W','Tasa de mutación','Flujo génico'],a:1,exp:'La ecuación de Hardy-Weinberg expresa las frecuencias genotípicas esperadas (p²=AA, 2pq=Aa, q²=aa) en una población en equilibrio.'},
+  {t:'evo',d:1,q:'El efecto fundador ocurre cuando:',ops:['Una población grande se divide en dos','Un grupo pequeño funda una población aislada','Hay alta tasa de mutación','Ocurre selección intensa'],a:1,exp:'Efecto fundador: pocos individuos fundan nueva población → baja diversidad genética aleatoria.'},
+  {t:'ori',d:0,q:'Miller y Urey demostraron que:',ops:['El ARN se formó espontáneamente','Aminoácidos pueden formarse abióticamente','O₂ es necesario para la vida','El ADN surgió antes que el ARN'],a:1,exp:'Síntesis abiótica de aminoácidos en condiciones de la Tierra primitiva (sin O₂, con descargas eléctricas).'},
+  {t:'ori',d:0,q:'¿Cuáles bacterias introdujeron O₂ por fotosíntesis?',ops:['Metanógenas','Halófilas','Cianobacterias','Termófilas'],a:2,exp:'Cianobacterias: primeras en fotosíntesis oxigénica → cambiaron la atmósfera primitiva (~2.4 Ga).'},
+  {t:'ori',d:1,q:'¿Cómo obtuvieron las eucariotas mitocondrias y cloroplastos?',ops:['Mutación','Endosimbiosis','Fisión binaria','Conjugación'],a:1,exp:'Teoría endosimbiótica (Margulis): eucariotas engulleron procariotas que se volvieron orgánulos. Evidencias: doble membrana, ADN propio, ribosomas 70S.'},
+  {t:'ori',d:0,q:'Las primeras células de la Tierra eran probablemente:',ops:['Eucariotas autótrofas','Procariotas heterótrofas anaerobias','Procariotas autótrofas aerobias','Virus'],a:1,exp:'Sin O₂ en atmósfera primitiva → anaerobias. Sin fotosíntesis inicial → heterótrofas (usaban moléculas orgánicas del "caldo primitivo").'},
+  {t:'ori',d:1,q:'¿Qué son las micorrizas?',ops:['Alga+hongo','Raíz+hongo','Tipo de alga','Bacterias del suelo'],a:1,exp:'Micorrizas: simbiosis entre hongo (micelio) y raíces de planta. El hongo amplía la superficie de absorción; la planta provee carbohidratos.'},
+  {t:'ori',d:0,q:'Un liquen es la asociación de:',ops:['Dos hongos','Bacteria+alga','Hongo+fotoautótrofo','Raíz+hongo'],a:2,exp:'Liquen = hongo heterótrofo + alga o cianobacteria (fotoautótrofo). Altamente resistentes.'},
+];
+let simSt={qs:[],idx:0,hits:0,miss:0,ans:false};
+function getAdaptiveQs(theme,n=12){
+  let pool=QB.filter(q=>theme==='all'||q.t===theme);
+  pool.sort((a,b)=>{
+    const hA=S.stats.themeHits[a.t]||0,mA=S.stats.themeMiss[a.t]||0;
+    const hB=S.stats.themeHits[b.t]||0,mB=S.stats.themeMiss[b.t]||0;
+    const accA=hA+mA>0?hA/(hA+mA):0.5,accB=hB+mB>0?hB/(hB+mB):0.5;
+    return accA-accB;
+  });
+  const diff=parseInt(document.getElementById('simDiff')?.value||1);
+  const filtered=pool.filter(q=>diff===1||q.d===diff);
+  return(filtered.length>3?filtered:pool).slice(0,n).sort(()=>Math.random()-.5);
+}
+function startSim(theme){simSt={qs:getAdaptiveQs(theme),idx:0,hits:0,miss:0,ans:false};renderSim();}
+function renderSim(){
+  const q=simSt.qs[simSt.idx];
+  if(!q){endSim();return;}
+  document.getElementById('simQText').textContent=q.q;
+  document.getElementById('simIdx').textContent=simSt.idx+1;
+  document.getElementById('simTot').textContent=simSt.qs.length;
+  document.getElementById('simH').textContent=simSt.hits;
+  document.getElementById('simM').textContent=simSt.miss;
+  document.getElementById('simMcq').innerHTML=q.ops.map((o,i)=>`<label class="option"><input type="radio" name="sqr" value="${i}"><span>${o}</span></label>`).join('');
+  document.getElementById('simFb').className='feedback';simSt.ans=false;
+  document.getElementById('simAnsBtn').style.display='';document.getElementById('simNextBtn').style.display='none';
+}
+function answerSim(){
+  if(simSt.ans)return;const q=simSt.qs[simSt.idx];
+  const sel=document.querySelector('input[name="sqr"]:checked');if(!sel){toast('Selecciona una opción');return;}
+  simSt.ans=true;const ok=parseInt(sel.value)===q.a;
+  if(ok)simSt.hits++;else simSt.miss++;
+  recordAnswer(ok,q.t);
+  const fb=document.getElementById('simFb');
+  fb.className='feedback show '+(ok?'good':'bad');
+  fb.innerHTML=(ok?'✔ Correcto. ':'✘ Incorrecto. Correcta: <strong>'+q.ops[q.a]+'</strong>. ')+q.exp;
+  document.querySelectorAll('input[name="sqr"]').forEach(i=>{const lbl=i.closest('.option');if(parseInt(i.value)===q.a)lbl.classList.add('correct');else if(i.checked)lbl.classList.add('wrong');});
+  if(!ok)addErrFlash(q);
+  document.getElementById('simAnsBtn').style.display='none';document.getElementById('simNextBtn').style.display='';
+}
+function nextSim(){simSt.idx++;renderSim();}
+function endSim(){S.stats.simsDone=(S.stats.simsDone||0)+1;addXP(50);saveState();renderStats();checkAchievements();document.getElementById('simQText').textContent='✅ Simulacro completo: '+simSt.hits+'/'+simSt.qs.length;document.getElementById('simMcq').innerHTML='';toast('🎉 Simulacro terminado! +50 XP');}
+
+// ═══════════════════════════════════════════════════════════
+//  MÓDULO: JUEGO
+// ═══════════════════════════════════════════════════════════
+let gameSt={qs:[],idx:0,score:0,hits:0,miss:0,ans:false,timer:null,secs:15,mode:''};
+function startGame(theme){
+  clearInterval(gameSt.timer);
+  gameSt={qs:QB.filter(q=>theme==='all'||q.t===theme).sort(()=>Math.random()-.5).slice(0,10),idx:0,score:0,hits:0,miss:0,ans:false,timer:null,secs:15,mode:theme};
+  document.getElementById('gMode').textContent={gen:'Genética',evo:'Evolución',ori:'Origen',all:'Mezclado'}[theme];
+  document.getElementById('gState').textContent='¡En juego!';renderGame();
+}
+function renderGame(){
+  const q=gameSt.qs[gameSt.idx];if(!q){endGame();return;}
+  document.getElementById('gStep').textContent=(gameSt.idx+1)+'/'+gameSt.qs.length;
+  document.getElementById('gQuestion').textContent=q.q;
+  document.getElementById('gMcq').innerHTML=q.ops.map((o,i)=>`<label class="option" onclick="A.pickGame(${i})"><span>${o}</span></label>`).join('');
+  document.getElementById('gFb').className='feedback';gameSt.ans=false;startGTimer();
+}
+function startGTimer(){clearInterval(gameSt.timer);gameSt.secs=15;document.getElementById('gTimer').textContent=15;gameSt.timer=setInterval(()=>{gameSt.secs--;document.getElementById('gTimer').textContent=gameSt.secs;if(gameSt.secs<=0){clearInterval(gameSt.timer);timeoutGame();}},1000);}
+function timeoutGame(){if(gameSt.ans)return;gameSt.ans=true;gameSt.miss++;recordAnswer(false,gameSt.qs[gameSt.idx]?.t||'gen');const fb=document.getElementById('gFb');fb.className='feedback show bad';fb.textContent='⏱ Tiempo agotado. Correcta: '+gameSt.qs[gameSt.idx]?.ops[gameSt.qs[gameSt.idx].a];setTimeout(()=>{gameSt.idx++;renderGame();},1800);}
+function pickGame(i){
+  if(gameSt.ans)return;clearInterval(gameSt.timer);gameSt.ans=true;
+  const q=gameSt.qs[gameSt.idx];const ok=i===q.a;
+  if(ok){const pts=gameSt.secs*10;gameSt.score+=pts;gameSt.hits++;recordAnswer(true,q.t);toast('+'+pts+' pts ⚡');}
+  else{gameSt.miss++;recordAnswer(false,q.t);}
+  document.getElementById('gScore').textContent=gameSt.score;document.getElementById('gHits').textContent=gameSt.hits;document.getElementById('gMiss').textContent=gameSt.miss;
+  const fb=document.getElementById('gFb');fb.className='feedback show '+(ok?'good':'bad');fb.textContent=ok?'✔ +'+gameSt.secs*10+' pts':'✘ Correcta: '+q.ops[q.a];
+  document.querySelectorAll('#gMcq .option').forEach((lbl,idx)=>{if(idx===q.a)lbl.classList.add('correct');else if(idx===i)lbl.classList.add('wrong');});
+  setTimeout(()=>{gameSt.idx++;renderGame();},1800);
+}
+function endGame(){
+  clearInterval(gameSt.timer);
+  if(gameSt.score>S.game.best)S.game.best=gameSt.score;
+  S.game.history=S.game.history||[];
+  S.game.history.unshift({score:gameSt.score,date:new Date().toLocaleDateString(),mode:gameSt.mode});
+  if(S.game.history.length>20)S.game.history.pop();
+  saveState();
+  document.getElementById('gBest').textContent=S.game.best;document.getElementById('gQuestion').textContent='🏁 Fin. Puntuación: '+gameSt.score;document.getElementById('gMcq').innerHTML='';document.getElementById('gState').textContent='Completado';
+  addXP(gameSt.hits*15);checkAchievements();renderRank();toast('🎮 Juego terminado. Puntuación: '+gameSt.score);
+}
+function resetGame(){clearInterval(gameSt.timer);gameSt={qs:[],idx:0,score:0,hits:0,miss:0,ans:false,timer:null,secs:15,mode:''};document.getElementById('gQuestion').textContent='Elige un modo.';document.getElementById('gMcq').innerHTML='';document.getElementById('gFb').className='feedback';}
+
+// ═══════════════════════════════════════════════════════════
+//  MÓDULO: FLASHCARDS
+// ═══════════════════════════════════════════════════════════
+const BASE_FLASH=[
+  {id:'f01',q:'¿Qué es el locus?',a:'Posición específica de un gen en un cromosoma.',t:'gen'},
+  {id:'f02',q:'Cromátidas hermanas vs. cromosomas homólogos.',a:'Hermanas: copias idénticas unidas por centrómero. Homólogos: mismo gen, posibles distintos alelos, uno materno y uno paterno.',t:'gen'},
+  {id:'f03',q:'¿Qué ocurre en profase I de la meiosis?',a:'Sinapsis de cromosomas homólogos + entrecruzamiento (crossing-over) → variabilidad genética.',t:'gen'},
+  {id:'f04',q:'Fórmula de heterocigotos en H-W.',a:'2pq, donde p=frecuencia del alelo dominante y q=frecuencia del recesivo (p+q=1).',t:'evo'},
+  {id:'f05',q:'Dominancia incompleta vs. codominancia.',a:'Incompleta: heterocigoto con fenotipo intermedio. Codominancia: ambos alelos expresados simultáneamente (ej. tipo AB).',t:'gen'},
+  {id:'f06',q:'¿Qué demostraron Miller y Urey?',a:'Síntesis abiótica de aminoácidos posible en condiciones de la Tierra primitiva (sin O₂, con descargas eléctricas).',t:'ori'},
+  {id:'f07',q:'¿Cuáles bacterias introdujeron O₂?',a:'Las cianobacterias, mediante fotosíntesis oxigénica (~2.4 Ga).',t:'ori'},
+  {id:'f08',q:'¿Qué es el operón lac?',a:'Genes estructurales + promotor + operador + gen regulador. Ejemplo de regulación en procariotas.',t:'gen'},
+  {id:'f09',q:'AUG = codón de inicio: codifica:',a:'Metionina. AUG es el codón de inicio de la traducción en el ARNm.',t:'gen'},
+  {id:'f10',q:'Replicación semiconservativa:',a:'Cada nueva molécula de ADN conserva una hebra original (molde) + una hebra recién sintetizada.',t:'gen'},
+  {id:'f11',q:'3 tipos de selección natural.',a:'Estabilizadora (favorece el promedio), Direccional (favorece un extremo), Disruptiva (favorece los extremos).',t:'evo'},
+  {id:'f12',q:'Teoría endosimbiótica.',a:'Mitocondrias y cloroplastos derivaron de procariotas engullidos por eucariotas ancestrales. Evidencias: doble membrana, ADN propio, ribosomas 70S.',t:'ori'},
+  {id:'f13',q:'Citocinesis: animales vs. vegetales.',a:'Animales: surco de segmentación. Vegetales: placa celular (vesículas de Golgi forman nueva pared).',t:'gen'},
+  {id:'f14',q:'¿Qué controla p53?',a:'Punto de control del daño en ADN. Si hay daño irreparable induce apoptosis. Si es reparable detiene el ciclo.',t:'gen'},
+  {id:'f15',q:'Hemofilia y daltonismo: tipo de herencia.',a:'Recesivos ligados al cromosoma X. Más frecuentes en hombres (XY) porque solo tienen un alelo X.',t:'gen'},
+  {id:'f16',q:'5 condiciones del equilibrio H-W.',a:'1) Sin mutaciones. 2) Sin selección natural. 3) Población grande. 4) Apareamiento al azar. 5) Sin flujo génico (migración).',t:'evo'},
+  {id:'f17',q:'¿Qué son los órganos análogos?',a:'Órganos con la misma función pero distinto origen evolutivo. Ej: ala de insecto y ala de ave.',t:'evo'},
+  {id:'f18',q:'Diferencia Bacteria vs. Archaea.',a:'Bacteria: peptidoglicano, enlaces éster, sin histonas. Archaea: sin peptidoglicano clásico, enlaces éter, con histonas.',t:'ori'},
+];
+let allFlash=[...BASE_FLASH],flashFil=[...BASE_FLASH],flashIdx=0,flashFlip=false;
+function addErrFlash(q){const id='err_'+q.q.substring(0,15).replace(/\W/g,'_');if(!allFlash.find(f=>f.id===id)){allFlash.push({id,q:'[Error] '+q.q,a:'Correcta: '+q.ops[q.a]+'. '+q.exp,t:q.t});flashFil=[...allFlash];renderFlash();}}
+function renderFlash(){
+  const f=flashFil[flashIdx];
+  const front=document.getElementById('flashFront'),back=document.getElementById('flashBack'),card=document.getElementById('flashCard');
+  if(!f){front.textContent='Sin tarjetas.';return;}
+  if(flashFlip){front.style.display='none';back.style.display='block';back.textContent=f.a;}
+  else{front.style.display='block';front.textContent=f.q;back.style.display='none';}
+  card.className='subitem flash-card-wrap'+(flashFlip?' flipped':'');
+  const dom=Object.values(S.flashProgress||{}).filter(Boolean).length;
+  S.stats.flashDom=dom;
+  document.getElementById('flashDomN').textContent=dom;
+  document.getElementById('flashProg').style.width=allFlash.length?dom/allFlash.length*100+'%':'0%';
+  document.getElementById('flashStatus').textContent='Tarjeta '+(flashIdx+1)+' de '+flashFil.length+(S.flashProgress[f.id]?' ✔':'');
+}
+function flipFlash(){flashFlip=!flashFlip;renderFlash();}
+function nextFlash(){flashIdx=(flashIdx+1)%flashFil.length;flashFlip=false;renderFlash();}
+function prevFlash(){flashIdx=(flashIdx-1+flashFil.length)%flashFil.length;flashFlip=false;renderFlash();}
+function markFlash(dom){const f=flashFil[flashIdx];if(!f)return;if(!S.flashProgress)S.flashProgress={};S.flashProgress[f.id]=dom;saveState();addXP(dom?5:0);checkAchievements();toast(dom?'✔ Dominada':'↺ Para repasar');nextFlash();}
+function shuffleFlash(){flashFil=[...flashFil].sort(()=>Math.random()-.5);flashIdx=0;flashFlip=false;renderFlash();}
+function filterFlash(t){if(t==='all')flashFil=[...allFlash];else if(t==='dom')flashFil=allFlash.filter(f=>S.flashProgress&&S.flashProgress[f.id]);else flashFil=allFlash.filter(f=>!S.flashProgress||!S.flashProgress[f.id]);flashIdx=0;flashFlip=false;renderFlash();}
+
+// ═══════════════════════════════════════════════════════════
+//  MÓDULO: POMODORO
+// ═══════════════════════════════════════════════════════════
+let pomoOn=false,pomoSecs=0,pomoRound=0,pomoPh='work',pomoInt=null;
+function pomoGetDur(){const w=parseInt(document.getElementById('pomoW')?.value||25);const s=parseInt(document.getElementById('pomoS')?.value||5);const l=parseInt(document.getElementById('pomoL')?.value||15);return pomoPh==='work'?w*60:pomoPh==='short'?s*60:l*60;}
+function renderPomo(){const m=Math.floor(pomoSecs/60),s=pomoSecs%60;document.getElementById('pomoDis').textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');document.getElementById('pomoPhase').textContent={work:'📖 Estudio',short:'☕ Descanso corto',long:'🌴 Descanso largo'}[pomoPh];document.getElementById('pomoCount').textContent=S.stats.pomodoros||0;}
+function togglePomo(){
+  if(pomoOn){clearInterval(pomoInt);pomoOn=false;}
+  else{if(!pomoSecs)pomoSecs=pomoGetDur();pomoOn=true;
+    pomoInt=setInterval(()=>{pomoSecs--;renderPomo();if(pomoSecs<=0){pomoRound++;if(pomoPh==='work'){S.stats.pomodoros=(S.stats.pomodoros||0)+1;addXP(30);saveState();checkAchievements();toast('🍅 Pomodoro completado! +30 XP');pomoPh=pomoRound%4===0?'long':'short';}else pomoPh='work';pomoSecs=pomoGetDur();renderPomo();}},1000);}
+}
+function resetPomo(){clearInterval(pomoInt);pomoOn=false;pomoRound=0;pomoPh='work';pomoSecs=pomoGetDur();renderPomo();}
+resetPomo();
+
+// ═══════════════════════════════════════════════════════════
+//  MÓDULO: TTS
+// ═══════════════════════════════════════════════════════════
+function tts(txt){if(!window.speechSynthesis||!txt?.trim())return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(String(txt).substring(0,2000));u.lang='es-ES';u.rate=0.95;const vs=speechSynthesis.getVoices().filter(v=>v.lang.startsWith('es'));if(vs.length)u.voice=vs[0];speechSynthesis.speak(u);}
+
+// ═══════════════════════════════════════════════════════════
+//  MÓDULO: SEARCH (real, con índice)
+// ═══════════════════════════════════════════════════════════
+let searchIndex=[];
+function buildSearchIndex(){
+  searchIndex=[];
+  // Indexar subitem, sim-question, subtopic-item, section headers
+  document.querySelectorAll('.subitem,[data-search-section],.subtopic-item,.sim-question').forEach(el=>{
+    const text=el.textContent.trim();
+    const sec=el.closest('[data-search-section]')?.dataset.searchSection||el.dataset.searchSection||'general';
+    const id=el.id||el.querySelector('[id]')?.id||'';
+    if(text.length>10)searchIndex.push({text,sec,el,id});
+  });
+}
+function search(q){
+  const drop=document.getElementById('searchDrop');
+  if(!q||q.length<2){drop.style.display='none';return;}
+  const terms=norm(q).split(' ').filter(Boolean);
+  const results=searchIndex.filter(item=>terms.every(t=>norm(item.text).includes(t))).slice(0,8);
+  if(!results.length){drop.style.display='block';drop.innerHTML='<div style="padding:.5rem;color:var(--muted);font-size:.82rem">Sin resultados para "'+q+'"</div>';return;}
+  drop.style.display='block';
+  const secLabels={resumen:'📚 Resumen',examen:'📝 Examen',general:'📄 General'};
+  drop.innerHTML=results.map(r=>{
+    const snippet=r.text.substring(0,80)+'…';
+    const hl=snippet.replace(new RegExp('('+q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')', 'gi'),'<span class="search-hl">$1</span>');
+    return`<div style="padding:.5rem .6rem;border-bottom:1px solid var(--border);cursor:pointer;font-size:.8rem" onclick="r_jump(this,${searchIndex.indexOf(r)})" title="${r.text.substring(0,200)}">
+      <span style="font-size:.7rem;color:var(--muted)">${secLabels[r.sec]||r.sec}</span><br>${hl}</div>`;
+  }).join('');
+}
+function r_jump(el,idx){
+  document.getElementById('searchDrop').style.display='none';
+  document.getElementById('searchInput').value='';
+  searchIndex[idx]?.el?.scrollIntoView({behavior:'smooth',block:'center'});
+  const target=searchIndex[idx]?.el;if(target){target.style.outline='3px solid var(--green)';setTimeout(()=>target.style.outline='',2500);}
+}
+document.addEventListener('click',e=>{if(!e.target.closest('nav'))document.getElementById('searchDrop').style.display='none';});
+
+// ═══════════════════════════════════════════════════════════
+//  MÓDULO: EXPORT / IMPORT
+// ═══════════════════════════════════════════════════════════
+function exportData(){
+  const d=new Date();const fname=`progreso-biologia-${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}.json`;
+  const blob=new Blob([JSON.stringify(S,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=fname;a.click();URL.revokeObjectURL(url);
+  toast('✅ Progreso guardado como '+fname);
+}
+function importData(input){
+  const file=input.files[0];if(!file)return;
+  const r=new FileReader();
+  r.onload=e=>{try{const d=JSON.parse(e.target.result);if(d.stats&&d.progress){S={...defaultState(),...d};saveState();initApp();toast('✅ Progreso restaurado correctamente.');}else toast('⚠ Archivo no válido: falta estructura esperada.');}catch{toast('⚠ Error al leer el archivo JSON.');}};
+  r.readAsText(file);input.value='';
+}
+
+// ═══════════════════════════════════════════════════════════
+//  MÓDULO: FEEDBACK / OPINIÓN
+// ═══════════════════════════════════════════════════════════
+function submitFeedback(){
+  const type=document.getElementById('fbType').value;const text=document.getElementById('fbText').value.trim();
+  if(!text){const fb=document.getElementById('fbResult');fb.className='feedback show bad';fb.textContent='⚠ Escribe algo antes de enviar.';return;}
+  S.feedback=S.feedback||[];S.feedback.push({type,text,ts:Date.now(),date:new Date().toLocaleString()});saveState();
+  document.getElementById('fbText').value='';const fb=document.getElementById('fbResult');fb.className='feedback show good';fb.textContent='✅ Comentario guardado. Visible en el panel de administración.';
+  toast('💬 Feedback enviado.');setTimeout(()=>{fb.className='feedback';},4000);
+}
+
+// ═══════════════════════════════════════════════════════════
+//  MÓDULO: ADMIN
+// ═══════════════════════════════════════════════════════════
+let adminOpen=false;
+function openAdmin(){
+  const pwd=prompt('Contraseña de administración (dejar vacío para acceso demo):');
+  if(pwd===null)return;
+  if(pwd!==''&&pwd!=='bio2024'){toast('⚠ Contraseña incorrecta.');return;}
+  adminOpen=true;document.getElementById('adminSection').style.display='block';
+  document.getElementById('adminSection').scrollIntoView({behavior:'smooth'});
+  renderAdminPanel();
+}
+function closeAdmin(){adminOpen=false;document.getElementById('adminSection').style.display='none';}
+function adminTab(t){
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('admin'+t[0].toUpperCase()+t.slice(1)).classList.add('active');
+}
+function renderAdminPanel(){
+  // Stats
+  document.getElementById('adminStatCards').innerHTML=`
+    <div class="stat-card"><div class="sv">${S.stats.total}</div><div class="sl">Total preguntas</div></div>
+    <div class="stat-card"><div class="sv">${S.stats.hits}</div><div class="sl">Aciertos</div></div>
+    <div class="stat-card"><div class="sv">${S.stats.miss}</div><div class="sl">Errores</div></div>
+    <div class="stat-card"><div class="sv">${S.stats.xp}</div><div class="sl">XP</div></div>
+    <div class="stat-card"><div class="sv">${S.stats.simsDone||0}</div><div class="sl">Simulacros</div></div>
+    <div class="stat-card"><div class="sv">${(S.feedback||[]).length}</div><div class="sl">Feedbacks</div></div>`;
+  // Feedback
+  const fbs=S.feedback||[];
+  document.getElementById('adminFbList').innerHTML=fbs.length?fbs.map(f=>`<div class="reco-item"><strong>${f.type}</strong><br>${f.text}<br><small class="muted">${f.date}</small></div>`).join(''):'Sin feedback aún.';
+  // Answers
+  document.getElementById('adminAnswerList').innerHTML=E23_SHORT_DATA.map((d,i)=>`<div style="padding:.4rem;border-bottom:1px solid var(--border)"><strong>P${i+1}:</strong> Acepta: ${d.ans.join(', ')}<br><em>${d.exp}</em></div>`).join('');
+}
+
+// ═══════════════════════════════════════════════════════════
+//  MÓDULO: DEVLIBRE
+// ═══════════════════════════════════════════════════════════
+function saveDevLibre(v){S.devLibre=v;saveState();}
+function restoreDevLibre(){const ta=document.getElementById('devLibre');if(ta&&S.devLibre)ta.value=S.devLibre;}
+
+// ═══════════════════════════════════════════════════════════
+//  MÓDULO: CONTINUAR SESIÓN
+// ═══════════════════════════════════════════════════════════
+function resumeSession(){document.getElementById(S.lastVisit?.section||'dashboard')?.scrollIntoView({behavior:'smooth'});}
+function updateLastVisit(){
+  const sections=['dashboard','resumen','examenes','simulacros','juego','flashcards','pomodoro','logros','panel'];
+  const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){S.lastVisit={section:e.target.id,ts:Date.now()};saveState();}});},{threshold:0.3});
+  sections.forEach(id=>{const el=document.getElementById(id);if(el)obs.observe(el);});
+}
+function renderContinuePanel(){
+  const lv=S.lastVisit;if(!lv||!lv.section||lv.section==='dashboard'){document.getElementById('continuePanel').style.display='none';return;}
+  document.getElementById('continuePanel').style.display='block';
+  document.getElementById('continueInfo').textContent='Última sección: #'+lv.section+(lv.ts?' · '+new Date(lv.ts).toLocaleString():'');
+}
+
+// ═══════════════════════════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════════════════════════
+function initApp(){
+  document.body.className=S.settings.theme==='default'?'':S.settings.theme;
+  setMode(S.settings.mode||'estudio');
+  buildExam();
+  renderStats();renderXP();renderAchievements();renderFlash();renderDomainMap();renderExamHistory();renderRank();renderContinuePanel();
+  restoreDevLibre();restoreTopics();restoreSTs();renderFavs();
+  // Restore fav buttons
+  document.querySelectorAll('.fav-btn').forEach(btn=>{if(S.favs&&S.favs[btn.dataset.fav]){btn.classList.add('active');btn.textContent='★ Fav';}});
+  setTimeout(()=>{buildSearchIndex();updateLastVisit();},500);
+}
+setTimeout(initApp,100);
+
+// API pública
+const A={
+  setMode,toggleTheme,timerToggle,timerReset,toggleExamTimer,
+  syncTopic,saveST,toggleFav,saveDevLibre,
+  reviewP1,resetP1,reviewP2,resetP2,reviewManual,resetManual,
+  reviewA1,resetA1,reviewA2,resetA2,
+  reviewDev1,resetDev1,reviewDev2,resetDev2,reviewDev3,resetDev3,calcGlobal,
+  startSim,answerSim,nextSim,
+  startGame,pickGame,resetGame,
+  flipFlash,nextFlash,prevFlash,markFlash,shuffleFlash,filterFlash,
+  togglePomo,resetPomo,
+  tts,search,exportData,importData,submitFeedback,
+  openAdmin,closeAdmin,adminTab,
+  showDomainDetail,filterDomain,resumeSession,
+  resetAll
+};
+</script>
+</body></html>
